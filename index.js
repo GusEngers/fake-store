@@ -5,6 +5,7 @@ async function main() {
   try {
     const PORT = process.env.PORT ?? 3000;
     app.listen(PORT, () => {
+      process.stdout.write(`[INFO] Server in '${process.env.NODE_ENV}' mode\n`);
       process.stdout.write(`[INFO] Server listening on port: ${PORT}\n`);
     });
   } catch (error) {
