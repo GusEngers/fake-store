@@ -10,6 +10,7 @@ const { getCategories } = require('../controllers/categories/get_categories');
 const { path } = require('../../utils/constants');
 const { categoriesHypermedia } = require('../../utils/hypermedias');
 const { updateCategories } = require('../controllers/categories/update_categories');
+const { deleteCategories } = require('../controllers/categories/delete_categories');
 
 // GESTIONES MASIVAS
 categories
@@ -36,6 +37,7 @@ categories
     }
   }, errorController)
   .put(async (req, res, next) => {
+    // Middleware que gestiona la actualización masiva de las categorías
     try {
       const { set, condition } = req.body;
       await updateCategories({ set, condition });
@@ -45,8 +47,11 @@ categories
     }
   }, errorController)
   .delete(async (req, res, next) => {
+    // Middleware que gestiona la eliminación masiva de las categorías
     try {
-      res.json({ msg: 'Eliminar categorias' });
+      const { condition } = req.body;
+      await deleteCategories({ condition });
+      res.status(204).end();
     } catch (error) {
       next(error);
     }
