@@ -9,6 +9,7 @@ const { getCategories } = require('../controllers/categories/get_categories');
 // Utilidades extras
 const { path } = require('../../utils/constants');
 const { categoriesHypermedia } = require('../../utils/hypermedias');
+const { updateCategories } = require('../controllers/categories/update_categories');
 
 // GESTIONES MASIVAS
 categories
@@ -36,7 +37,9 @@ categories
   }, errorController)
   .put(async (req, res, next) => {
     try {
-      res.json({ msg: 'Actualizar categorias' });
+      const { set, condition } = req.body;
+      await updateCategories({ set, condition });
+      res.status(204).end();
     } catch (error) {
       next(error);
     }
