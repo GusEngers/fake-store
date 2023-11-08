@@ -4,13 +4,17 @@ const categories = require('express').Router();
 // Controladores de rutas
 const { errorController } = require('../controllers/errorController');
 const { addCategory } = require('../controllers/categories/add_category');
+const { getCategories } = require('../controllers/categories/get_categories');
 
 // Utilidades extras
 const { path } = require('../../utils/constants');
+const { categoriesHypermedia } = require('../../utils/hypermedias');
 
+// GESTIONES MASIVAS
 categories
   .route('/')
   .post(async (req, res, next) => {
+    // Middleware que gestiona la creación de nuevas categorías
     try {
       const { name, description } = req.body;
       const category = await addCategory({ name, description });
@@ -21,9 +25,11 @@ categories
     }
   }, errorController)
   .get(async (req, res, next) => {
+    // Middleware que gestiona la visualización de las categorías
     try {
-      const category = await Category.create({ name: 'hola', description: 'adsasd' });
-      res.json(category);
+      const { limit, offset } = req.query;
+      const { total, current, categories } = await getCategories({ limit, offset });
+      res.json({ total, current, categories, paths: categoriesHypermedia() });
     } catch (error) {
       next(error);
     }
@@ -32,9 +38,9 @@ categories
     try {
       res.json({ msg: 'Actualizar categorias' });
     } catch (error) {
-      res.json({ msg: 'Error actualizar categorias' });
+      next(error);
     }
-  })
+  }, errorController)
   .delete(async (req, res, next) => {
     try {
       res.json({ msg: 'Eliminar categorias' });
