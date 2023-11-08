@@ -5,6 +5,7 @@ const handleNotFound = require('./utils/handleNotFound');
 const handleGlobalError = require('./utils/handleGlobalError');
 
 const app = express();
+app.disabled('x-powered-by');
 app.use(express.json());
 app.use(require('morgan')('dev'));
 

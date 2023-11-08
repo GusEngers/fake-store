@@ -46,12 +46,12 @@ const Category = CategoryInit(sequelize);
 async function db() {
   try {
     if (MODE === PRODUCTION) {
-      await Product.sync();
       await Category.sync();
+      await Product.sync();
     }
     if (MODE === DEVELOPMENT) {
-      await Product.sync({ alter: true });
       await Category.sync({ alter: true });
+      await Product.sync({ alter: true });
     }
     
     await sequelize.authenticate();

@@ -1,70 +1,78 @@
 const Category = require('../models/category');
-
 const categories = require('express').Router();
+
+// Controladores de rutas
+const { errorController } = require('../controllers/errorController');
+const { addCategory } = require('../controllers/categories/add_category');
+
+// Utilidades extras
+const { path } = require('../../utils/constants');
 
 categories
   .route('/')
-  .post(async (req, res) => {
+  .post(async (req, res, next) => {
     try {
-      res.json({ msg: 'Crear categoria' });
+      const { name, description } = req.body;
+      const category = await addCategory({ name, description });
+      res.setHeader('Location', `${path(req)}/api/categories/${category.id}`);
+      res.status(201).json(category);
     } catch (error) {
-      res.json({ msg: 'Error crear categoria' });
+      next(error);
     }
-  })
-  .get(async (req, res) => {
+  }, errorController)
+  .get(async (req, res, next) => {
     try {
       const category = await Category.create({ name: 'hola', description: 'adsasd' });
       res.json(category);
     } catch (error) {
-      console.log(error)
-      res.json({ msg: 'Error obtener categorias' });
+      next(error);
     }
-  })
-  .put(async (req, res) => {
+  }, errorController)
+  .put(async (req, res, next) => {
     try {
       res.json({ msg: 'Actualizar categorias' });
     } catch (error) {
       res.json({ msg: 'Error actualizar categorias' });
     }
   })
-  .delete(async (req, res) => {
+  .delete(async (req, res, next) => {
     try {
       res.json({ msg: 'Eliminar categorias' });
     } catch (error) {
-      res.json({ msg: 'Error eliminar categorias' });
+      next(error);
     }
-  });
+  }, errorController);
 
 categories
   .route('/:id')
-  .get(async (req, res) => {
+  .get(async (req, res, next) => {
     try {
       res.json({ msg: 'Obtener categoria' });
     } catch (error) {
-      res.json({ msg: 'Error obtener categoria' });
+      next(error);
     }
-  })
-  .put(async (req, res) => {
+  }, errorController)
+  .put(async (req, res, next) => {
     try {
       res.json({ msg: 'Actualizar categoria' });
     } catch (error) {
-      res.json({ msg: 'Error actualizar categoria' });
+      next(error);
     }
-  })
+  }, errorController)
   .delete(async (req, res) => {
     try {
       res.json({ msg: 'Eliminar categoria' });
     } catch (error) {
-      res.json({ msg: 'Error eliminar categoria' });
+      next(error);
     }
-  });
+  }, errorController);
 
-categories.route('/:id/products').get(async (req, res) => {
+categories.route('/:id/products').get(async (req, res, next) => {
   try {
     res.json({ msg: 'Obtener productos por categoria' });
   } catch (error) {
-    res.json({ msg: 'Error obtener productos por categoria' });
+    next(error);
   }
-});
+}, errorController);
 
 module.exports = categories;
