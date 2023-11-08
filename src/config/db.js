@@ -3,6 +3,8 @@ require('dotenv').config();
 const MODE = process.env.NODE_ENV;
 
 const { Sequelize } = require('sequelize');
+const ProductInit = require('../api/models/product');
+const CategoryInit = require('../api/models/category');
 
 /**
  * Función para crear una instancia Sequelize para la conexión
@@ -34,12 +36,24 @@ function createInstance() {
   }
 }
 const sequelize = createInstance();
+const Product = ProductInit(sequelize);
+const Category = CategoryInit(sequelize);
 
 /**
  * Función que verifica si se estableció la conexión a la base de datos
+ * y sincroniza los modelos de las tablas de la base de datos
  */
 async function db() {
   try {
+    if (MODE === PRODUCTION) {
+      await Product.sync();
+      await Category.sync();
+    }
+    if (MODE === DEVELOPMENT) {
+      await Product.sync({ alter: true });
+      await Category.sync({ alter: true });
+    }
+    
     await sequelize.authenticate();
     process.stdout.write('[INFO] Database connected\n');
   } catch (error) {
@@ -48,4 +62,4 @@ async function db() {
   }
 }
 
-module.exports = { db, sequelize };
+module.exports = { db, Product, Category };
