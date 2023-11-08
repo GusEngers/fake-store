@@ -1,3 +1,5 @@
+const Category = require('../models/category');
+
 const categories = require('express').Router();
 
 categories
@@ -11,8 +13,10 @@ categories
   })
   .get(async (req, res) => {
     try {
-      res.json({ msg: 'Obtener categorias' });
+      const category = await Category.create({ name: 'hola', description: 'adsasd' });
+      res.json(category);
     } catch (error) {
+      console.log(error)
       res.json({ msg: 'Error obtener categorias' });
     }
   })

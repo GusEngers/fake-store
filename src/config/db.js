@@ -1,11 +1,12 @@
-const { Sequelize } = require('sequelize');
 const { PRODUCTION, DEVELOPMENT } = require('../utils/constants');
 require('dotenv').config();
 const MODE = process.env.NODE_ENV;
 
+const { Sequelize } = require('sequelize');
+
 /**
  * Función para crear una instancia Sequelize para la conexión
- * de la base de datos, utiliza diferentes enfoques teniendo 
+ * de la base de datos, utiliza diferentes enfoques teniendo
  * en cuenta si la conexión se realiza en modo producción o
  * en modo desarrollo
  */
@@ -32,29 +33,19 @@ function createInstance() {
     throw new Error('Missing information to make the connection to the database');
   }
 }
+const sequelize = createInstance();
 
 /**
- * Función que verifica si se estableció la conexión a la base de
- * datos, además sincroniza los modelos de la base de datos según
- * el entorno de ejecución
+ * Función que verifica si se estableció la conexión a la base de datos
  */
 async function db() {
   try {
-    const sequelize = createInstance();
     await sequelize.authenticate();
-
-    /**
-     * Si usamos el entorno de ejecución de producción se crearán las tablas si no
-     * existen. Si usamos otro entorno, se realizarán los cambios necesarios en las
-     * tablas si es necesario hacerlo
-     */
-    MODE === PRODUCTION ? await sequelize.sync() : await sequelize.sync({ alter: true });
-    
     process.stdout.write('[INFO] Database connected\n');
   } catch (error) {
-    process.stdout.write(`[ERROR] Error connected database: ${error.message}`);
+    process.stdout.write(`[ERROR] Error connected database: ${error.message}\n`);
     process.exit(1);
   }
 }
 
-module.exports = { db, sequelize: createInstance() };
+module.exports = { db, sequelize };

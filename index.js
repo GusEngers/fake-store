@@ -16,7 +16,7 @@ require('dotenv').config();
       process.stdout.write(`[INFO] Server listening on port: ${PORT}\n`);
     });
   } catch (error) {
-    process.stdout.write(`[ERROR] Error starting server: ${error.message}`);
+    process.stdout.write(`[ERROR] Error starting server: ${error.message}\n`);
     process.exit(1);
   }
 })();
