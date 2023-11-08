@@ -6,6 +6,6 @@ const payments = require('./payments');
 
 api.use('/products', products);
 api.use('/categories', categories);
-api.use("/payments", payments)
+api.use('/payments', payments);
 
 module.exports = api;

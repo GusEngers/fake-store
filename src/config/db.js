@@ -4,7 +4,7 @@ require('dotenv').config();
 
 /**
  * Función para realizar la conexión a la base de datos,
- * utiliza diferentes enfoques si la conexion se realiza
+ * utiliza diferentes enfoques si la conexión se realiza
  * en la aplicación en modo producción o en modo desarrollo
  */
 async function db() {
