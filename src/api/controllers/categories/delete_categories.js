@@ -18,4 +18,17 @@ async function deleteCategories({ condition = {} }) {
   }
 }
 
-module.exports = { deleteCategories };
+/**
+ * Función para eliminar una categoría según su `id`
+ * @param id Identificador de la categoría
+ */
+async function deleteCategory({ id }) {
+  const count = await Category.destroy({ where: { id } }).catch((_) => {
+    throw new ResponseError('Error deleting categories', 400);
+  });
+  if (count === 0) {
+    throw new ResponseError("The category doesn't exist", 404);
+  }
+}
+
+module.exports = { deleteCategories, deleteCategory };

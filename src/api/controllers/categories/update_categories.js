@@ -19,4 +19,18 @@ async function updateCategories({ set, condition = {} }) {
   }
 }
 
-module.exports = { updateCategories };
+/**
+ * Función para actualizar una categoría según su `id`
+ * @param set Nuevos datos actualizados
+ * @param id Identificador de la categoría
+ */
+async function updateCategory({ id, set }) {
+  const count = await Category.update(set, { where: { id } }).catch((_) => {
+    throw new ResponseError('Error updating category', 400);
+  });
+  if (count[0] === 0) {
+    throw new ResponseError("The category doesn't exist", 404);
+  }
+}
+
+module.exports = { updateCategories, updateCategory };

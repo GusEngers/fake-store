@@ -5,8 +5,8 @@ const categories = require('express').Router();
 const { errorController } = require('../controllers/errorController');
 const { addCategory } = require('../controllers/categories/add_category');
 const { getCategories, getCategory } = require('../controllers/categories/get_categories');
-const { updateCategories } = require('../controllers/categories/update_categories');
-const { deleteCategories } = require('../controllers/categories/delete_categories');
+const { updateCategories, updateCategory } = require('../controllers/categories/update_categories');
+const { deleteCategories, deleteCategory } = require('../controllers/categories/delete_categories');
 
 // Utilidades extras
 const { path } = require('../../utils/constants');
@@ -71,15 +71,22 @@ categories
     }
   }, errorController)
   .put(async (req, res, next) => {
+    // Middleware que gestiona la actualización de una categoría
     try {
-      res.json({ msg: 'Actualizar categoria' });
+      const { id } = req.params;
+      const set = req.body;
+      await updateCategory({ id, set });
+      res.status(204).end();
     } catch (error) {
       next(error);
     }
   }, errorController)
   .delete(async (req, res) => {
+    // Middleware que gestiona la eliminación de una categoría
     try {
-      res.json({ msg: 'Eliminar categoria' });
+      const { id } = req.params;
+      await deleteCategory({ id });
+      res.status(204).end();
     } catch (error) {
       next(error);
     }
