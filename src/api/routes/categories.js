@@ -4,13 +4,13 @@ const categories = require('express').Router();
 // Controladores de rutas
 const { errorController } = require('../controllers/errorController');
 const { addCategory } = require('../controllers/categories/add_category');
-const { getCategories } = require('../controllers/categories/get_categories');
+const { getCategories, getCategory } = require('../controllers/categories/get_categories');
+const { updateCategories } = require('../controllers/categories/update_categories');
+const { deleteCategories } = require('../controllers/categories/delete_categories');
 
 // Utilidades extras
 const { path } = require('../../utils/constants');
 const { categoriesHypermedia } = require('../../utils/hypermedias');
-const { updateCategories } = require('../controllers/categories/update_categories');
-const { deleteCategories } = require('../controllers/categories/delete_categories');
 
 // GESTIONES MASIVAS
 categories
@@ -57,11 +57,15 @@ categories
     }
   }, errorController);
 
+// GESTIONES ÚNICAS
 categories
   .route('/:id')
   .get(async (req, res, next) => {
+    // Middleware que gestiona la visualización de una categoría
     try {
-      res.json({ msg: 'Obtener categoria' });
+      const { id } = req.params;
+      const category = await getCategory({ id });
+      res.json(category);
     } catch (error) {
       next(error);
     }

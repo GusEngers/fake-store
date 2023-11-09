@@ -16,11 +16,24 @@ async function getCategories({ limit = 10, offset = 0 }) {
     throw new ResponseError(message, 400);
   }
 
-  const categories = await Category.findAll({ limit, offset });
-  if (!categories.length) {
+  const { rows: categories, count: current } = await Category.findAndCountAll({ limit, offset });
+  if (!current) {
     throw new ResponseError('There are no resulting categories for this query', 404);
   }
-  return { total, categories, current: categories.length };
+  return { total, categories, current };
 }
 
-module.exports = { getCategories };
+/**
+ * Función para obtener una categoría específica según su `id`
+ * @param id Identificador de la categoría
+ * @returns Objeto con informción de la categoría
+ */
+async function getCategory({ id }) {
+  const category = await Category.findByPk(id);
+  if (category === null) {
+    throw new ResponseError("The category doesn't exist", 404);
+  }
+  return category;
+}
+
+module.exports = { getCategories, getCategory };
