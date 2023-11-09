@@ -14,7 +14,7 @@ class ResponseError extends Error {
 
   get response() {
     const _res = {};
-    if (this.errors === undefined) {
+    if (this.errors !== undefined) {
       _res.errors = this.errors;
     }
     _res.message = this.message;
