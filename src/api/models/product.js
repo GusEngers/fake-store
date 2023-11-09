@@ -33,13 +33,6 @@ module.exports = (sequelize) => {
         type: DataTypes.DECIMAL,
         allowNull: false,
       },
-      category: {
-        type: DataTypes.INTEGER,
-        references: {
-          model: Category,
-          key: 'id',
-        },
-      },
       paths: {
         type: DataTypes.VIRTUAL,
         get() {

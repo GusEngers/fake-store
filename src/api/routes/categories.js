@@ -1,4 +1,3 @@
-const Category = require('../models/category');
 const categories = require('express').Router();
 
 // Controladores de rutas
@@ -7,6 +6,7 @@ const { addCategory } = require('../controllers/categories/add_category');
 const { getCategories, getCategory } = require('../controllers/categories/get_categories');
 const { updateCategories, updateCategory } = require('../controllers/categories/update_categories');
 const { deleteCategories, deleteCategory } = require('../controllers/categories/delete_categories');
+const { getProductsByCategory } = require('../controllers/products/get_products');
 
 // Utilidades extras
 const { path } = require('../../utils/constants');
@@ -81,7 +81,7 @@ categories
       next(error);
     }
   }, errorController)
-  .delete(async (req, res) => {
+  .delete(async (req, res, next) => {
     // Middleware que gestiona la eliminación de una categoría
     try {
       const { id } = req.params;
@@ -93,8 +93,12 @@ categories
   }, errorController);
 
 categories.route('/:id/products').get(async (req, res, next) => {
+  // Middleware que gestiona la visualización de productos según su categoría
   try {
-    res.json({ msg: 'Obtener productos por categoria' });
+    const category = req.params.id;
+    const { limit, offset } = req.query;
+    const { products, current, total } = await getProductsByCategory({ category, limit, offset });
+    res.json({ products, current, total });
   } catch (error) {
     next(error);
   }

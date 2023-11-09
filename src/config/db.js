@@ -45,6 +45,13 @@ const Category = CategoryInit(sequelize);
  */
 async function db() {
   try {
+    Category.hasMany(Product, {
+      foreignKey: 'categoryId',
+      as: 'category',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    });
+    Product.belongsTo(Category);
     if (MODE === PRODUCTION) {
       await Category.sync();
       await Product.sync();
@@ -53,7 +60,7 @@ async function db() {
       await Category.sync({ alter: true });
       await Product.sync({ alter: true });
     }
-    
+
     await sequelize.authenticate();
     process.stdout.write('[INFO] Database connected\n');
   } catch (error) {
