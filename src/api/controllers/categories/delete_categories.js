@@ -24,7 +24,7 @@ async function deleteCategories({ condition = {} }) {
  */
 async function deleteCategory({ id }) {
   const count = await Category.destroy({ where: { id } }).catch((_) => {
-    throw new ResponseError('Error deleting categories', 400);
+    throw new ResponseError('Error deleting category', 400);
   });
   if (count === 0) {
     throw new ResponseError("The category doesn't exist", 404);

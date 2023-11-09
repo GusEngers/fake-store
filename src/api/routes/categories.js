@@ -10,7 +10,7 @@ const { getProductsByCategory } = require('../controllers/products/get_products'
 
 // Utilidades extras
 const { path } = require('../../utils/constants');
-const { categoriesHypermedia } = require('../../utils/hypermedias');
+const { categoriesHypermedia, productsByCategoryHypermedia } = require('../../utils/hypermedias');
 
 // GESTIONES MASIVAS
 categories
@@ -74,7 +74,7 @@ categories
     // Middleware que gestiona la actualización de una categoría
     try {
       const { id } = req.params;
-      const set = req.body;
+      const { set } = req.body;
       await updateCategory({ id, set });
       res.status(204).end();
     } catch (error) {
@@ -92,13 +92,14 @@ categories
     }
   }, errorController);
 
+// GESTIONES EXTRAS
 categories.route('/:id/products').get(async (req, res, next) => {
   // Middleware que gestiona la visualización de productos según su categoría
   try {
-    const category = req.params.id;
+    const categoryId = req.params.id;
     const { limit, offset } = req.query;
-    const { products, current, total } = await getProductsByCategory({ category, limit, offset });
-    res.json({ products, current, total });
+    const { products, current, total } = await getProductsByCategory({ categoryId, limit, offset });
+    res.json({ total, current, products, paths: productsByCategoryHypermedia(categoryId) });
   } catch (error) {
     next(error);
   }

@@ -38,15 +38,33 @@ module.exports = (sequelize) => {
         get() {
           return [
             {
+              ref: 'self',
               href: `/api/products/${this.id}`,
               action: 'GET',
             },
             {
+              ref: 'self',
               href: `/api/products/${this.id}`,
               action: 'PUT',
             },
             {
+              ref: 'self',
               href: `/api/products/${this.id}`,
+              action: 'DELETE',
+            },
+            {
+              ref: 'categories',
+              href: `/api/categories/${this.category.id}`,
+              action: 'GET',
+            },
+            {
+              ref: 'categories',
+              href: `/api/categories/${this.category.id}`,
+              action: 'PUT',
+            },
+            {
+              ref: 'categories',
+              href: `/api/categories/${this.category.id}`,
               action: 'DELETE',
             },
           ];
