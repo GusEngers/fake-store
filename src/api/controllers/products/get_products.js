@@ -18,7 +18,12 @@ async function getProductsByCategory({ category, limit = 10, offset = 0 }) {
 
   const { rows: products, count: current } = await Product.findAndCountAll({
     where: { categoryId: category },
-    include: Category,
+    include: {
+      model: Category,
+      attributes: {
+        exclude: ['paths'],
+      },
+    },
     limit,
     offset,
   });
