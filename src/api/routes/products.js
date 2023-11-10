@@ -7,6 +7,9 @@ const { getProducts, getProduct } = require('../controllers/products/get_product
 const { updateProducts, updateProduct } = require('../controllers/products/update_products');
 const { deleteProducts, deleteProduct } = require('../controllers/products/delete_products');
 
+// Middlewares de rutas
+const { checkNewProduct } = require('../middlewares/check_body');
+
 // Utilidades extras
 const { path } = require('../../utils/constants');
 const { productsHypermedia } = require('../../utils/hypermedias');
@@ -14,17 +17,21 @@ const { productsHypermedia } = require('../../utils/hypermedias');
 // GESTIONES MASIVAS
 products
   .route('/')
-  .post(async (req, res, next) => {
-    // Middleware que gestiona la creación de nuevos productos
-    try {
-      const { name, description, price, categoryId } = req.body;
-      const product = await addProduct({ name, description, price, categoryId });
-      res.setHeader('Location', `${path(req)}/api/products/${product.id}`);
-      res.status(201).json(product);
-    } catch (error) {
-      next(error);
-    }
-  }, errorController)
+  .post(
+    checkNewProduct,
+    async (req, res, next) => {
+      // Middleware que gestiona la creación de nuevos productos
+      try {
+        const { name, description, price, categoryId } = req.body;
+        const product = await addProduct({ name, description, price, categoryId });
+        res.setHeader('Location', `${path(req)}/api/products/${product.id}`);
+        res.status(201).json(product);
+      } catch (error) {
+        next(error);
+      }
+    },
+    errorController
+  )
   .get(async (req, res, next) => {
     // Middleware que gestiona la visualización de los productos
     try {

@@ -16,15 +16,15 @@ async function getCategories({ limit = 10, offset = 0 }) {
     throw new ResponseError(message, 400);
   }
 
-  const { rows: categories, count: current } = await Category.findAndCountAll({
+  const categories = await Category.findAll({
     limit,
     offset,
     order: [['id', 'ASC']],
   });
-  if (!current) {
+  if (!categories.length) {
     throw new ResponseError('There are no resulting categories for this query', 404);
   }
-  return { total, categories, current };
+  return { total, categories, current: categories.length };
 }
 
 /**

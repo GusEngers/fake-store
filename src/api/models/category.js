@@ -21,10 +21,16 @@ module.exports = (sequelize) => {
       name: {
         type: DataTypes.STRING,
         allowNull: false,
+        set(value) {
+          this.setDataValue('name', value.trim().toLowerCase());
+        },
       },
       description: {
         type: DataTypes.TEXT,
         allowNull: false,
+        set(value) {
+          this.setDataValue('description', value.trim().toLowerCase());
+        },
       },
       paths: {
         type: DataTypes.VIRTUAL,

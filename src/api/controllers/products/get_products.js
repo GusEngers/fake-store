@@ -16,7 +16,7 @@ async function getProductsByCategory({ categoryId, limit = 10, offset = 0 }) {
     throw new ResponseError(message, 400);
   }
 
-  const { rows: products, count: current } = await Product.findAndCountAll({
+  const products = await Product.findAll({
     where: { categoryId },
     include: {
       model: Category,
@@ -31,10 +31,10 @@ async function getProductsByCategory({ categoryId, limit = 10, offset = 0 }) {
     offset,
     order: [['id', 'ASC']],
   });
-  if (!current) {
+  if (!products.length) {
     throw new ResponseError('There are no resulting products for this query', 404);
   }
-  return { total, products, current };
+  return { total, products, current: products.length };
 }
 
 /**
@@ -52,7 +52,7 @@ async function getProducts({ limit = 10, offset = 0 }) {
     throw new ResponseError(message, 400);
   }
 
-  const { rows: products, count: current } = await Product.findAndCountAll({
+  const products = await Product.findAll({
     include: {
       model: Category,
       attributes: {
@@ -66,10 +66,10 @@ async function getProducts({ limit = 10, offset = 0 }) {
     offset,
     order: [['id', 'ASC']],
   });
-  if (!current) {
+  if (!products.length) {
     throw new ResponseError('There are no resulting products for this query', 404);
   }
-  return { total, products, current };
+  return { total, products, current: products.length };
 }
 
 /**

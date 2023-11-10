@@ -13,13 +13,13 @@ class ResponseError extends Error {
   }
 
   get response() {
-    const _res = {};
+    const __res = {};
+    __res.message = this.message;
+    __res.status = this.status;
     if (this.errors !== undefined) {
-      _res.errors = this.errors;
+      __res.errors = this.errors;
     }
-    _res.message = this.message;
-    _res.status = this.status;
-    return _res;
+    return __res;
   }
 }
 

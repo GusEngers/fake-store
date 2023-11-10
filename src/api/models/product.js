@@ -24,10 +24,16 @@ module.exports = (sequelize) => {
       name: {
         type: DataTypes.STRING,
         allowNull: false,
+        set(value) {
+          this.setDataValue('name', value.trim().toLowerCase());
+        },
       },
       description: {
         type: DataTypes.TEXT,
         allowNull: false,
+        set(value) {
+          this.setDataValue('description', value.trim().toLowerCase());
+        },
       },
       price: {
         type: DataTypes.DECIMAL,
@@ -54,17 +60,17 @@ module.exports = (sequelize) => {
             },
             {
               ref: 'categories',
-              href: `/api/categories/${this.category.id}`,
+              href: `/api/categories/${this.categoryId ?? this.category.id}`,
               action: 'GET',
             },
             {
               ref: 'categories',
-              href: `/api/categories/${this.category.id}`,
+              href: `/api/categories/${this.categoryId ?? this.category.id}`,
               action: 'PUT',
             },
             {
               ref: 'categories',
-              href: `/api/categories/${this.category.id}`,
+              href: `/api/categories/${this.categoryId ?? this.category.id}`,
               action: 'DELETE',
             },
           ];

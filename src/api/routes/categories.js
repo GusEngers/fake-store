@@ -8,6 +8,9 @@ const { updateCategories, updateCategory } = require('../controllers/categories/
 const { deleteCategories, deleteCategory } = require('../controllers/categories/delete_categories');
 const { getProductsByCategory } = require('../controllers/products/get_products');
 
+// Middlewares de rutas
+const { checkNewCategory } = require('../middlewares/check_body');
+
 // Utilidades extras
 const { path } = require('../../utils/constants');
 const { categoriesHypermedia, productsByCategoryHypermedia } = require('../../utils/hypermedias');
@@ -15,17 +18,21 @@ const { categoriesHypermedia, productsByCategoryHypermedia } = require('../../ut
 // GESTIONES MASIVAS
 categories
   .route('/')
-  .post(async (req, res, next) => {
-    // Middleware que gestiona la creación de nuevas categorías
-    try {
-      const { name, description } = req.body;
-      const category = await addCategory({ name, description });
-      res.setHeader('Location', `${path(req)}/api/categories/${category.id}`);
-      res.status(201).json(category);
-    } catch (error) {
-      next(error);
-    }
-  }, errorController)
+  .post(
+    checkNewCategory,
+    async (req, res, next) => {
+      // Middleware que gestiona la creación de nuevas categorías
+      try {
+        const { name, description } = req.body;
+        const category = await addCategory({ name, description });
+        res.setHeader('Location', `${path(req)}/api/categories/${category.id}`);
+        res.status(201).json(category);
+      } catch (error) {
+        next(error);
+      }
+    },
+    errorController
+  )
   .get(async (req, res, next) => {
     // Middleware que gestiona la visualización de las categorías
     try {
