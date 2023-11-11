@@ -2,6 +2,9 @@ const { Product } = require('../../../config/db');
 const { productsLimitAndOffsetCheck } = require('../../../utils/checks');
 const ResponseError = require('../../../utils/errors');
 
+const { NODE_ENV, PRODUCTION } = require('../../../utils/constants');
+const { deleteProductSimulation } = require('./simulation/delete_products');
+
 /**
  * Función para eliminar masivamente los productos según una
  * condición dada
@@ -14,6 +17,17 @@ async function deleteProducts({ limit = 10, offset = 0 }) {
   const ids = await Product.findAll({ limit, offset, order: [['id', 'ASC']] }).then((products) =>
     products.map((product) => product.id)
   );
+
+  if (NODE_ENV === PRODUCTION) {
+    if (!ids.length) {
+      throw new ResponseError(
+        'There are no products that match the requested condition, or there are no records in the database',
+        404
+      );
+    }
+    return;
+  }
+
   const count = await Product.destroy({ where: { id: ids } }).catch((_) => {
     throw new ResponseError('Error deleting products', 400);
   });
@@ -30,6 +44,10 @@ async function deleteProducts({ limit = 10, offset = 0 }) {
  * @param id Identificador del producto
  */
 async function deleteProduct({ id }) {
+  if (NODE_ENV === PRODUCTION) {
+    await deleteProductSimulation({ id });
+    return;
+  }
   const count = await Product.destroy({ where: { id } }).catch((_) => {
     throw new ResponseError('Error deleting product', 400);
   });

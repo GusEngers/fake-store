@@ -1,6 +1,9 @@
 const { Category } = require('../../../config/db');
-const { categoriesLimitAndOffsetCheck } = require('../../../utils/checks');
 const ResponseError = require('../../../utils/errors');
+const { categoriesLimitAndOffsetCheck } = require('../../../utils/checks');
+
+const { PRODUCTION, NODE_ENV } = require('../../../utils/constants');
+const { deleteCategorySimulation } = require('./simulation/delete_categories');
 
 /**
  * Función para eliminar masivamente las categorías según una
@@ -15,7 +18,17 @@ async function deleteCategories({ limit = 10, offset = 0 }) {
     categories.map((category) => category.id)
   );
 
-  const count = await Category.destroy({ where: {id: ids} }).catch((_) => {
+  if (NODE_ENV === PRODUCTION) {
+    if (!ids.length) {
+      throw new ResponseError(
+        'There are no categories that match the requested condition, or there are no records in the database',
+        404
+      );
+    }
+    return;
+  }
+
+  const count = await Category.destroy({ where: { id: ids } }).catch((_) => {
     throw new ResponseError('Error deleting categories', 400);
   });
   if (count === 0) {
@@ -31,6 +44,11 @@ async function deleteCategories({ limit = 10, offset = 0 }) {
  * @param id Identificador de la categoría
  */
 async function deleteCategory({ id }) {
+  if (NODE_ENV === PRODUCTION) {
+    await deleteCategorySimulation({ id });
+    return;
+  }
+
   const count = await Category.destroy({ where: { id } }).catch((_) => {
     throw new ResponseError('Error deleting category', 400);
   });

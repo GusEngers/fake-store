@@ -2,6 +2,9 @@ const { Category } = require('../../../config/db');
 const { categoriesLimitAndOffsetCheck } = require('../../../utils/checks');
 const ResponseError = require('../../../utils/errors');
 
+const { PRODUCTION, NODE_ENV } = require('../../../utils/constants');
+const { updateCategorySimulation } = require('./simulation/update_categories');
+
 /**
  * Función para actualizar masivamente las categorías según una
  * condición dada
@@ -15,6 +18,17 @@ async function updateCategories({ set, limit = 10, offset = 0 }) {
   const ids = await Category.findAll({ limit, offset, order: [['id', 'ASC']] }).then((categories) =>
     categories.map((category) => category.id)
   );
+
+  if (NODE_ENV === PRODUCTION) {
+    if (!ids.length) {
+      throw new ResponseError(
+        'There are no categories that match the requested condition, or there are no records in the database',
+        404
+      );
+    }
+    return;
+  }
+
   const count = await Category.update(set, { where: { id: ids } }).catch((_) => {
     throw new ResponseError('Error updating categories', 400);
   });
@@ -32,6 +46,11 @@ async function updateCategories({ set, limit = 10, offset = 0 }) {
  * @param id Identificador de la categoría
  */
 async function updateCategory({ id, set }) {
+  if (NODE_ENV === PRODUCTION) {
+    await updateCategorySimulation({ id });
+    return;
+  }
+
   const count = await Category.update(set, { where: { id } }).catch((_) => {
     throw new ResponseError('Error updating category', 400);
   });

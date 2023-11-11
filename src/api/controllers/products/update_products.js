@@ -2,6 +2,9 @@ const { Product } = require('../../../config/db');
 const { productsLimitAndOffsetCheck } = require('../../../utils/checks');
 const ResponseError = require('../../../utils/errors');
 
+const { NODE_ENV, PRODUCTION } = require('../../../utils/constants');
+const { updateProductSimulation } = require('./simulation/update_products');
+
 /**
  * Función para actualizar masivamente los productos según una
  * condición dada
@@ -15,6 +18,17 @@ async function updateProducts({ set, limit = 10, offset = 0 }) {
   const ids = await Product.findAll({ limit, offset, order: [['id', 'ASC']] }).then((products) =>
     products.map((product) => product.id)
   );
+
+  if (NODE_ENV === PRODUCTION) {
+    if (!ids.length) {
+      throw new ResponseError(
+        'There are no products that match the requested condition, or there are no records in the database',
+        404
+      );
+    }
+    return;
+  }
+
   const count = await Product.update(set, { where: { id: ids } }).catch((_) => {
     throw new ResponseError('Error updating products', 400);
   });
@@ -32,6 +46,11 @@ async function updateProducts({ set, limit = 10, offset = 0 }) {
  * @param id Identificador del producto
  */
 async function updateProduct({ id, set }) {
+  if (NODE_ENV === PRODUCTION) {
+    await updateProductSimulation({ id });
+    return;
+  }
+
   const count = await Product.update(set, { where: { id } }).catch((_) => {
     throw new ResponseError('Error updating product', 400);
   });

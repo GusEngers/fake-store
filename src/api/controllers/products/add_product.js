@@ -1,6 +1,9 @@
 const { Product, Category } = require('../../../config/db');
 const ResponseError = require('../../../utils/errors');
 
+const { NODE_ENV, PRODUCTION } = require('../../../utils/constants');
+const { addProductSimulation } = require('./simulation/add_product');
+
 /**
  * Función para crear un nuevo producto en la base de datos
  * @param name Nombre del nuevo producto
@@ -11,6 +14,11 @@ const ResponseError = require('../../../utils/errors');
  */
 async function addProduct({ name, description, price, categoryId }) {
   try {
+    if (NODE_ENV === PRODUCTION) {
+      const product = await addProductSimulation({ name, description, price, categoryId });
+      return product;
+    }
+
     const product = await Product.create(
       { name, description, price, categoryId },
       { include: { model: Category } }

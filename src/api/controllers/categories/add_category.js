@@ -1,6 +1,9 @@
 const { Category } = require('../../../config/db');
 const ResponseError = require('../../../utils/errors');
 
+const { PRODUCTION, NODE_ENV } = require('../../../utils/constants');
+const { addCategorySimulation } = require('./simulation/add_category');
+
 /**
  * Función para crear una nueva categoría de productos en la
  * base de datos
@@ -10,6 +13,10 @@ const ResponseError = require('../../../utils/errors');
  */
 async function addCategory({ name, description }) {
   try {
+    if (NODE_ENV === PRODUCTION) {
+      const category = await addCategorySimulation({ name, description });
+      return category;
+    }
     const category = await Category.create({ name, description });
     return category;
   } catch (_) {
