@@ -2,7 +2,6 @@ const { Model, DataTypes } = require('sequelize');
 const CategoryInit = require('./category');
 
 module.exports = (sequelize) => {
-  const Category = CategoryInit(sequelize);
   /**
    * Modelo para tabla `products` para administrar información sobre
    * los productos de la API Web
@@ -42,38 +41,47 @@ module.exports = (sequelize) => {
       paths: {
         type: DataTypes.VIRTUAL,
         get() {
-          return [
-            {
-              ref: 'self',
-              href: `/api/products/${this.id}`,
-              action: 'GET',
-            },
-            {
-              ref: 'self',
-              href: `/api/products/${this.id}`,
-              action: 'PUT',
-            },
-            {
-              ref: 'self',
-              href: `/api/products/${this.id}`,
-              action: 'DELETE',
-            },
-            {
-              ref: 'categories',
-              href: `/api/categories/${this.categoryId ?? this.category.id}`,
-              action: 'GET',
-            },
-            {
-              ref: 'categories',
-              href: `/api/categories/${this.categoryId ?? this.category.id}`,
-              action: 'PUT',
-            },
-            {
-              ref: 'categories',
-              href: `/api/categories/${this.categoryId ?? this.category.id}`,
-              action: 'DELETE',
-            },
-          ];
+          if (this.changed() === false) {
+            return [
+              {
+                ref: 'self',
+                href: `/api/products/${this.getDataValue('id')}`,
+                action: 'GET',
+              },
+              {
+                ref: 'self',
+                href: `/api/products/${this.getDataValue('id')}`,
+                action: 'PUT',
+              },
+              {
+                ref: 'self',
+                href: `/api/products/${this.getDataValue('id')}`,
+                action: 'DELETE',
+              },
+              {
+                ref: 'categories',
+                href: `/api/categories/${
+                  this.getDataValue('categoryId') ?? this.getDataValue('category').id
+                }`,
+                action: 'GET',
+              },
+              {
+                ref: 'categories',
+                href: `/api/categories/${
+                  this.getDataValue('categoryId') ?? this.getDataValue('category').id
+                }`,
+                action: 'PUT',
+              },
+              {
+                ref: 'categories',
+                href: `/api/categories/${
+                  this.getDataValue('categoryId') ?? this.getDataValue('category').id
+                }`,
+                action: 'DELETE',
+              },
+            ];
+          }
+          return false;
         },
       },
     },

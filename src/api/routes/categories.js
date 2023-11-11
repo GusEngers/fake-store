@@ -9,7 +9,7 @@ const { deleteCategories, deleteCategory } = require('../controllers/categories/
 const { getProductsByCategory } = require('../controllers/products/get_products');
 
 // Middlewares de rutas
-const { checkNewCategory } = require('../middlewares/check_body');
+const { checkNewCategory, checkUpdateCategory } = require('../middlewares/check_body');
 
 // Utilidades extras
 const { path } = require('../../utils/constants');
@@ -43,16 +43,21 @@ categories
       next(error);
     }
   }, errorController)
-  .put(async (req, res, next) => {
-    // Middleware que gestiona la actualización masiva de las categorías
-    try {
-      const { set, condition } = req.body;
-      await updateCategories({ set, condition });
-      res.status(204).end();
-    } catch (error) {
-      next(error);
-    }
-  }, errorController)
+  .put(
+    checkUpdateCategory,
+    async (req, res, next) => {
+      // Middleware que gestiona la actualización masiva de las categorías
+      try {
+        const { limit, offset } = req.query;
+        const set = req.body;
+        await updateCategories({ set, limit, offset });
+        res.status(204).end();
+      } catch (error) {
+        next(error);
+      }
+    },
+    errorController
+  )
   .delete(async (req, res, next) => {
     // Middleware que gestiona la eliminación masiva de las categorías
     try {
@@ -77,17 +82,21 @@ categories
       next(error);
     }
   }, errorController)
-  .put(async (req, res, next) => {
-    // Middleware que gestiona la actualización de una categoría
-    try {
-      const { id } = req.params;
-      const { set } = req.body;
-      await updateCategory({ id, set });
-      res.status(204).end();
-    } catch (error) {
-      next(error);
-    }
-  }, errorController)
+  .put(
+    checkUpdateCategory,
+    async (req, res, next) => {
+      // Middleware que gestiona la actualización de una categoría
+      try {
+        const { id } = req.params;
+        const set = req.body;
+        await updateCategory({ id, set });
+        res.status(204).end();
+      } catch (error) {
+        next(error);
+      }
+    },
+    errorController
+  )
   .delete(async (req, res, next) => {
     // Middleware que gestiona la eliminación de una categoría
     try {

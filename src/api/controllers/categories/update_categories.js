@@ -1,14 +1,21 @@
 const { Category } = require('../../../config/db');
+const { categoriesOffsetCheck } = require('../../../utils/checks');
 const ResponseError = require('../../../utils/errors');
 
 /**
  * Función para actualizar masivamente las categorías según una
  * condición dada
  * @param set Nuevos datos actualizados
- * @param condition Condición para actualizar las categorías
+ * @param limit Límite de categorías por consulta
+ * @param offset Número de categorías a omitir
  */
-async function updateCategories({ set, condition = {} }) {
-  const count = await Category.update(set, { where: condition }).catch((_) => {
+async function updateCategories({ set, limit = 10, offset = 0 }) {
+  await categoriesOffsetCheck({ offset }, false);
+
+  const ids = await Category.findAll({ limit, offset, order: [['id', 'ASC']] }).then((categories) =>
+    categories.map((category) => category.id)
+  );
+  const count = await Category.update(set, { where: { id: ids } }).catch((_) => {
     throw new ResponseError('Error updating categories', 400);
   });
   if (count[0] === 0) {

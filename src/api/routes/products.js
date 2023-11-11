@@ -8,7 +8,7 @@ const { updateProducts, updateProduct } = require('../controllers/products/updat
 const { deleteProducts, deleteProduct } = require('../controllers/products/delete_products');
 
 // Middlewares de rutas
-const { checkNewProduct } = require('../middlewares/check_body');
+const { checkNewProduct, checkUpdateProduct } = require('../middlewares/check_body');
 
 // Utilidades extras
 const { path } = require('../../utils/constants');
@@ -76,17 +76,21 @@ products
       next(error);
     }
   }, errorController)
-  .put(async (req, res, next) => {
-    // Middleware que gestiona la actualización de un producto
-    try {
-      const { id } = req.params;
-      const { set } = req.body;
-      await updateProduct({ id, set });
-      res.status(204).end();
-    } catch (error) {
-      next(error);
-    }
-  }, errorController)
+  .put(
+    checkUpdateProduct,
+    async (req, res, next) => {
+      // Middleware que gestiona la actualización de un producto
+      try {
+        const { id } = req.params;
+        const set = req.body;
+        await updateProduct({ id, set });
+        res.status(204).end();
+      } catch (error) {
+        next(error);
+      }
+    },
+    errorController
+  )
   .delete(async (req, res, next) => {
     // Middleware que gestiona la eliminación de un producto
     try {
