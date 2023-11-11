@@ -85,15 +85,34 @@ class CheckBody {
 /**
  * Función que verifica si el número de registros de categorías omitidas no son mayores a los
  * almacenados en la base de datos
- * @param {{offset: number}} offset Número de categorías a omitir
+ * @param {{offset: number, limit: number}} offset Número de categorías a omitir
+ * @param limit Límite de categorías por consulta
  * @param {boolean} r Por defecto es `true`, indicando que debe ser retornado el valor total de los registros
  * @returns Valor total de registros almacenados en la base de datos
  */
-async function categoriesOffsetCheck({ offset }, r = true) {
+async function categoriesLimitAndOffsetCheck({ offset, limit }, r = true) {
+  const errors = [];
+  if (limit < 1 || limit > 50) {
+    const message =
+      limit > 50
+        ? `'limit' cannot have values greater than 50`
+        : `'limit' cannot have values less than 1`;
+    errors.push(message);
+  }
+  if (offset < 0 || offset > 50) {
+    const message =
+      offset > 50
+        ? `'offset' cannot have values greater than 50`
+        : `'offset' cannot have values less than 0`;
+    errors.push(message);
+  }
+  if (!!errors.length) {
+    throw new ResponseError(`Error setting 'limit' and/or 'offset'`, 400, errors);
+  }
   const total = await Category.count();
 
   if (offset > total) {
-    const message = `'offset' should not be greater than the total 'count' of categories, currently 'offset' is ${offset} and 'count' is ${total}`;
+    const message = `'offset' should not be greater than the total 'count' of categories, currently 'offset' is ${offset} and total categories is ${total}`;
     throw new ResponseError(message, 400);
   }
   if (r) {
@@ -104,15 +123,34 @@ async function categoriesOffsetCheck({ offset }, r = true) {
 /**
  * Función que verifica si el número de registros de productos omitidos no son mayores a los
  * almacenados en la base de datos
- * @param {{offset: number}} offset Número de categorías a omitir
+ * @param {{offset: number, limit: number}} offset Número de categorías a omitir
+ * @param limit Límite de productos por consulta
  * @param {boolean} r Por defecto es `true`, indicando que debe ser retornado el valor total de los registros
  * @returns Valor total de registros almacenados en la base de datos
  */
-async function productsOffsetCheck({ offset }, r = true) {
+async function productsLimitAndOffsetCheck({ offset, limit }, r = true) {
+  const errors = [];
+  if (limit < 1 || limit > 50) {
+    const message =
+      limit > 50
+        ? `'limit' cannot have values greater than 50`
+        : `'limit' cannot have values less than 1`;
+    errors.push(message);
+  }
+  if (offset < 0 || offset > 50) {
+    const message =
+      offset > 50
+        ? `'offset' cannot have values greater than 50`
+        : `'offset' cannot have values less than 0`;
+    errors.push(message);
+  }
+  if (!!errors.length) {
+    throw new ResponseError(`Error setting 'limit' and/or 'offset'`, 400, errors);
+  }
   const total = await Product.count();
 
   if (offset > total) {
-    const message = `'offset' should not be greater than the total 'count' of products, currently 'offset' is ${offset} and 'count' is ${total}`;
+    const message = `'offset' should not be greater than the total 'count' of products, currently 'offset' is ${offset} and total products is ${total}`;
     throw new ResponseError(message, 400);
   }
   if (r) {
@@ -120,4 +158,4 @@ async function productsOffsetCheck({ offset }, r = true) {
   }
 }
 
-module.exports = { CheckBody, categoriesOffsetCheck, productsOffsetCheck };
+module.exports = { CheckBody, categoriesLimitAndOffsetCheck, productsLimitAndOffsetCheck };

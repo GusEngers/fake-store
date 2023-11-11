@@ -1,5 +1,5 @@
 const { Category } = require('../../../config/db');
-const { categoriesOffsetCheck } = require('../../../utils/checks');
+const { categoriesLimitAndOffsetCheck } = require('../../../utils/checks');
 const ResponseError = require('../../../utils/errors');
 
 /**
@@ -10,7 +10,7 @@ const ResponseError = require('../../../utils/errors');
  * @param offset Número de categorías a omitir
  */
 async function updateCategories({ set, limit = 10, offset = 0 }) {
-  await categoriesOffsetCheck({ offset }, false);
+  await categoriesLimitAndOffsetCheck({ offset, limit }, false);
 
   const ids = await Category.findAll({ limit, offset, order: [['id', 'ASC']] }).then((categories) =>
     categories.map((category) => category.id)

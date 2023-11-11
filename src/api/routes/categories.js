@@ -61,8 +61,8 @@ categories
   .delete(async (req, res, next) => {
     // Middleware que gestiona la eliminación masiva de las categorías
     try {
-      const { condition } = req.body;
-      await deleteCategories({ condition });
+      const { limit, offset } = req.query;
+      await deleteCategories({ limit, offset });
       res.status(204).end();
     } catch (error) {
       next(error);
