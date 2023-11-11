@@ -1,4 +1,5 @@
 const { Product, Category } = require('../../../config/db');
+const { productsLimitAndOffsetCheck } = require('../../../utils/checks');
 const ResponseError = require('../../../utils/errors');
 
 /**
@@ -9,12 +10,7 @@ const ResponseError = require('../../../utils/errors');
  * @returns Lista de productos por categoría
  */
 async function getProductsByCategory({ categoryId, limit = 10, offset = 0 }) {
-  const total = await Product.count({ where: { categoryId }, include: Category });
-
-  if (offset > total) {
-    const message = `'offset' should not be greater than the total 'count' of products, currently 'offset' is ${offset} and 'count' is ${total}`;
-    throw new ResponseError(message, 400);
-  }
+  const total = await productsLimitAndOffsetCheck({ limit, offset });
 
   const products = await Product.findAll({
     where: { categoryId },

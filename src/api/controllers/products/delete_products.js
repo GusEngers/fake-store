@@ -1,13 +1,20 @@
 const { Product } = require('../../../config/db');
+const { productsLimitAndOffsetCheck } = require('../../../utils/checks');
 const ResponseError = require('../../../utils/errors');
 
 /**
  * Función para eliminar masivamente los productos según una
  * condición dada
- * @param condition Condición para eliminar los productos
+ * @param limit Límite de productos por consulta
+ * @param offset Número de productos a omitir
  */
-async function deleteProducts({ condition = {} }) {
-  const count = await Product.destroy({ where: condition }).catch((_) => {
+async function deleteProducts({ limit = 10, offset = 0 }) {
+  await productsLimitAndOffsetCheck({ limit, offset }, false);
+
+  const ids = await Product.findAll({ limit, offset, order: [['id', 'ASC']] }).then((products) =>
+    products.map((product) => product.id)
+  );
+  const count = await Product.destroy({ where: { id: ids } }).catch((_) => {
     throw new ResponseError('Error deleting products', 400);
   });
   if (count === 0) {

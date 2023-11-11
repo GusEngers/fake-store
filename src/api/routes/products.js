@@ -9,6 +9,8 @@ const { deleteProducts, deleteProduct } = require('../controllers/products/delet
 
 // Middlewares de rutas
 const { checkNewProduct, checkUpdateProduct } = require('../middlewares/check_body');
+const { checkId } = require('../middlewares/check_id');
+const { checkCategory } = require('../middlewares/check_category');
 
 // Utilidades extras
 const { path } = require('../../utils/constants');
@@ -19,6 +21,7 @@ products
   .route('/')
   .post(
     checkNewProduct,
+    checkCategory,
     async (req, res, next) => {
       // Middleware que gestiona la creación de nuevos productos
       try {
@@ -42,21 +45,27 @@ products
       next(error);
     }
   }, errorController)
-  .put(async (req, res, next) => {
-    // Middleware que gestiona la actualización masiva de productos
-    try {
-      const { set, condition } = req.body;
-      await updateProducts({ set, condition });
-      res.status(204).end();
-    } catch (error) {
-      next(error);
-    }
-  }, errorController)
+  .put(
+    checkUpdateProduct,
+    checkCategory,
+    async (req, res, next) => {
+      // Middleware que gestiona la actualización masiva de productos
+      try {
+        const { limit, offset } = req.query;
+        const set = req.body;
+        await updateProducts({ set, limit, offset });
+        res.status(204).end();
+      } catch (error) {
+        next(error);
+      }
+    },
+    errorController
+  )
   .delete(async (req, res, next) => {
     // Middleware que gestiona la eliminación masiva de productos
     try {
-      const { condition } = req.body;
-      await deleteProducts({ condition });
+      const { limit, offset } = req.query;
+      await deleteProducts({ limit, offset });
       res.status(204).end();
     } catch (error) {
       next(error);
@@ -64,6 +73,7 @@ products
   }, errorController);
 
 // GESTIONES ÚNICAS
+products.use('/:id', checkId);
 products
   .route('/:id')
   .get(async (req, res, next) => {
@@ -78,6 +88,7 @@ products
   }, errorController)
   .put(
     checkUpdateProduct,
+    checkCategory,
     async (req, res, next) => {
       // Middleware que gestiona la actualización de un producto
       try {

@@ -1,14 +1,21 @@
 const { Product } = require('../../../config/db');
+const { productsLimitAndOffsetCheck } = require('../../../utils/checks');
 const ResponseError = require('../../../utils/errors');
 
 /**
  * Función para actualizar masivamente los productos según una
  * condición dada
  * @param set Nuevos datos actualizados
- * @param condition Condición para actualizar los productos
+ * @param limit Límite de productos por consulta
+ * @param offset Número de productos a omitir
  */
-async function updateProducts({ set, condition = {} }) {
-  const count = await Product.update(set, { where: condition }).catch((_) => {
+async function updateProducts({ set, limit = 10, offset = 0 }) {
+  await productsLimitAndOffsetCheck({ limit, offset }, false);
+
+  const ids = await Product.findAll({ limit, offset, order: [['id', 'ASC']] }).then((products) =>
+    products.map((product) => product.id)
+  );
+  const count = await Product.update(set, { where: { id: ids } }).catch((_) => {
     throw new ResponseError('Error updating products', 400);
   });
   if (count[0] === 0) {
