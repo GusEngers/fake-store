@@ -10,6 +10,7 @@ const { getProductsByCategory } = require('../controllers/products/get_products'
 
 // Middlewares de rutas
 const { checkNewCategory, checkUpdateCategory } = require('../middlewares/check_body');
+const { checkId } = require('../middlewares/check_id');
 
 // Utilidades extras
 const { path } = require('../../utils/constants');
@@ -70,6 +71,7 @@ categories
   }, errorController);
 
 // GESTIONES ÚNICAS
+categories.use('/:id', checkId);
 categories
   .route('/:id')
   .get(async (req, res, next) => {
