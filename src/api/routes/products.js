@@ -40,7 +40,7 @@ products
     try {
       const { limit, offset } = req.query;
       const { total, current, products } = await getProducts({ limit, offset });
-      res.json({ total, current, products, paths: productsHypermedia() });
+      res.json({ total, current, products, paths: productsHypermedia({ limit, offset }) });
     } catch (error) {
       next(error);
     }

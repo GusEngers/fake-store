@@ -41,12 +41,7 @@ async function getProductsByCategory({ categoryId, limit = 10, offset = 0 }) {
  * @returns Lista de productos
  */
 async function getProducts({ limit = 10, offset = 0 }) {
-  const total = await Product.count();
-
-  if (offset > total) {
-    const message = `'offset' should not be greater than the total 'count' of products, currently 'offset' is ${offset} and 'count' is ${total}`;
-    throw new ResponseError(message, 400);
-  }
+  const total = await productsLimitAndOffsetCheck({ limit, offset });
 
   const products = await Product.findAll({
     include: {

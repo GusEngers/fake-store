@@ -15,7 +15,7 @@ async function checkCategory(req, res, next) {
       if (category === null) {
         throw new ResponseError("The category doesn't exist", 404);
       }
-      next();
+      return next();
     }
     next();
   } catch (error) {

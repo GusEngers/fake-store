@@ -39,7 +39,7 @@ categories
     try {
       const { limit, offset } = req.query;
       const { total, current, categories } = await getCategories({ limit, offset });
-      res.json({ total, current, categories, paths: categoriesHypermedia() });
+      res.json({ total, current, categories, paths: categoriesHypermedia({ limit, offset }) });
     } catch (error) {
       next(error);
     }
@@ -117,7 +117,12 @@ categories.route('/:id/products').get(async (req, res, next) => {
     const categoryId = req.params.id;
     const { limit, offset } = req.query;
     const { products, current, total } = await getProductsByCategory({ categoryId, limit, offset });
-    res.json({ total, current, products, paths: productsByCategoryHypermedia(categoryId) });
+    res.json({
+      total,
+      current,
+      products,
+      paths: productsByCategoryHypermedia({ id: categoryId, limit, offset }),
+    });
   } catch (error) {
     next(error);
   }
