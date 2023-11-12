@@ -1,4 +1,18 @@
 /**
+ * Función que genera un array con todos los vínculos hypermedia de caracter global
+ * sin incluir la propiedad `ref`
+ * @returns Lista de todos los vínculos generales sin su relación
+ */
+function allHypermedia() {
+  const options = { limit: 10, offset: 0 };
+  return categoriesHypermedia(options)
+    .concat(productsHypermedia(options))
+    .map((path) => {
+      return { href: path.href, action: path.action };
+    });
+}
+
+/**
  * Función para generar un array con los vínculos hypermedia de
  * las solicitudes de categorías
  * @param {{ limit: number, offset: number }} limit Límite de productos por consulta
@@ -80,4 +94,9 @@ function productsByCategoryHypermedia({ id, limit = 10, offset = 0 }) {
   ];
 }
 
-module.exports = { categoriesHypermedia, productsHypermedia, productsByCategoryHypermedia };
+module.exports = {
+  allHypermedia,
+  categoriesHypermedia,
+  productsHypermedia,
+  productsByCategoryHypermedia,
+};

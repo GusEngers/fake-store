@@ -1,4 +1,4 @@
-const { categoriesHypermedia, productsHypermedia } = require('./hypermedias');
+const { allHypermedia } = require('./hypermedias');
 
 /**
  * Controlador para rutas inexistentes
@@ -10,10 +10,6 @@ module.exports = (req, res) => {
   res.status(404).json({
     message: 'Route not found',
     status: 404,
-    paths: categoriesHypermedia(options)
-      .concat(productsHypermedia(options))
-      .map((path) => {
-        return { href: path.href, action: path.action };
-      }),
+    paths: allHypermedia(),
   });
 };

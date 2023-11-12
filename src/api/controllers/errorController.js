@@ -1,4 +1,5 @@
 const ResponseError = require('../../utils/errors');
+const { allHypermedia } = require('../../utils/hypermedias');
 
 /**
  * Controlador para manejar los errores en los endpoints
@@ -17,4 +18,16 @@ function errorController(err, req, res, next) {
   });
 }
 
-module.exports = { errorController };
+/**
+ * Controlador para manejar los errores de acceso a rutas con métodos
+ * que no están permitidos para esa ruta
+ */
+function methodNotAllowed(err, req, res, next) {
+  const response = {
+    ...err.response,
+    paths: allHypermedia(),
+  };
+  res.status(err.status).json(response);
+}
+
+module.exports = { errorController, methodNotAllowed };

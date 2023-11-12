@@ -1,11 +1,17 @@
 const api = require('express').Router();
 
+// Rutas definidas
 const products = require('./products');
 const categories = require('./categories');
 const payments = require('./payments');
 
-api.use('/products', products);
-api.use('/categories', categories);
+// Métodos no permitidos
+const productsNotAllowed = require('./method-not-allowed/products');
+const categoriesNotAllowed = require('./method-not-allowed/categories');
+
+// Rutas configuradas
+api.use('/products', products, productsNotAllowed);
+api.use('/categories', categories, categoriesNotAllowed);
 api.use('/payments', payments);
 
 module.exports = api;

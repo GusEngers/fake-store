@@ -1,7 +1,7 @@
 const express = require('express');
 const api = require('./api/routes');
 
-const { categoriesHypermedia, productsHypermedia } = require('./utils/hypermedias');
+const { allHypermedia } = require('./utils/hypermedias');
 
 const handleNotFound = require('./utils/handleNotFound');
 const handleGlobalError = require('./utils/handleGlobalError');
@@ -16,9 +16,7 @@ app.get('/', (req, res) => {
   res.send(`
   <body style="display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;background-color:black">
     <h1>FakeStore API</h1>
-    ${categoriesHypermedia(options)
-      .concat(productsHypermedia(options))
-      .map((path) => `<p>${path.action} - ${path.href}</p>`)}
+    ${allHypermedia().map((path) => `<p>${path.action} - ${path.href}</p>`)}
   </body>
   `);
 });

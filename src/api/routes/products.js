@@ -15,6 +15,7 @@ const { checkCategory } = require('../middlewares/check_category');
 // Utilidades extras
 const { path } = require('../../utils/constants');
 const { productsHypermedia } = require('../../utils/hypermedias');
+const ResponseError = require('../../utils/errors');
 
 // GESTIONES MASIVAS
 products
@@ -111,6 +112,10 @@ products
     } catch (error) {
       next(error);
     }
+  }, errorController)
+  // Métodos no aceptados en esta ruta
+  .post((req, res, next) => {
+    next(new ResponseError('Method Not Allowed', 405));
   }, errorController);
 
 module.exports = products;
