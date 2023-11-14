@@ -3,6 +3,7 @@ const api = require('./api/routes');
 
 const { allHypermedia } = require('./utils/hypermedias');
 
+const handleHeaders = require('./utils/handleHeaders');
 const handleNotFound = require('./utils/handleNotFound');
 const handleGlobalError = require('./utils/handleGlobalError');
 
@@ -10,6 +11,7 @@ const app = express();
 app.disable('x-powered-by');
 app.use(express.json());
 app.use(require('morgan')('dev'));
+app.use(handleHeaders);
 
 app.get('/', (req, res) => {
   const options = { limit: 10, offset: 0 };
