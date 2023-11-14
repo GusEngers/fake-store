@@ -49,7 +49,7 @@ function checkNewProduct(req, res, next) {
 
 /**
  * Middleware que verifica si los datos ingresados por `body` necesarios
- * para actualizar un producto son correctos
+ * para actualizar una categoría son correctos
  */
 function checkUpdateCategory(req, res, next) {
   try {
@@ -71,7 +71,7 @@ function checkUpdateCategory(req, res, next) {
 
 /**
  * Middleware que verifica si los datos ingresados por `body` necesarios
- * para actualzar un producto son correctos
+ * para actualizar un producto son correctos
  */
 function checkUpdateProduct(req, res, next) {
   try {
@@ -93,4 +93,29 @@ function checkUpdateProduct(req, res, next) {
   }
 }
 
-module.exports = { checkNewCategory, checkNewProduct, checkUpdateCategory, checkUpdateProduct };
+/**
+ * Middleware que verifica si los datos ingresados por `body` necesarios
+ * para el proceso de pago de productos son correctos
+ */
+function checkPaymentsProducts(req, res, next) {
+  try {
+    const check = new CheckBody({
+      body: req.body,
+      message: 'Error verifying the data required to payments products',
+    });
+    if (check.__verifyArray()) {
+      throw new ResponseError(check.message, 400, check.errors);
+    }
+    next();
+  } catch (error) {
+    res.status(error.status).json(error.response);
+  }
+}
+
+module.exports = {
+  checkNewCategory,
+  checkNewProduct,
+  checkUpdateCategory,
+  checkUpdateProduct,
+  checkPaymentsProducts,
+};

@@ -35,7 +35,7 @@ module.exports = (sequelize) => {
         },
       },
       price: {
-        type: DataTypes.DECIMAL,
+        type: DataTypes.DECIMAL(15, 2),
         allowNull: false,
       },
       paths: {

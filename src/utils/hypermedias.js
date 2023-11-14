@@ -7,6 +7,7 @@ function allHypermedia() {
   const options = { limit: 10, offset: 0 };
   return categoriesHypermedia(options)
     .concat(productsHypermedia(options))
+    .concat(paymentsHypermedia())
     .map((path) => {
       return { href: path.href, action: path.action };
     });
@@ -94,9 +95,45 @@ function productsByCategoryHypermedia({ id, limit = 10, offset = 0 }) {
   ];
 }
 
+/**
+ * Función para generar un array con los vínculos hypermedia de
+ * las solicitudes de pagos
+ * @returns Lista de vínculos para proceso de pago
+ */
+function paymentsHypermedia() {
+  return [
+    {
+      ref: 'self',
+      href: '/api/payments',
+      action: 'POST',
+    },
+    {
+      ref: 'self',
+      href: '/api/payments?option=1',
+      action: 'POST',
+    },
+    {
+      ref: 'self',
+      href: '/api/payments?option=2',
+      action: 'POST',
+    },
+    {
+      ref: 'self',
+      href: '/api/payments?option=3',
+      action: 'POST',
+    },
+    {
+      ref: 'self',
+      href: '/api/payments?option=4',
+      action: 'POST',
+    },
+  ];
+}
+
 module.exports = {
   allHypermedia,
   categoriesHypermedia,
   productsHypermedia,
   productsByCategoryHypermedia,
+  paymentsHypermedia,
 };

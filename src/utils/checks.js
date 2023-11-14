@@ -51,7 +51,7 @@ class CheckBody {
 
   /**
    * Método para verficar los campos del `body` añadidos con `addProp`
-   * @returns Ejecución de `__hasErrors`, verificando si hay algún error en la vaidación
+   * @returns Ejecución de `__hasErrors`, verificando si hay algún error en la validación
    */
   verify() {
     if (this.body.hasOwnProperty('id')) {
@@ -78,6 +78,36 @@ class CheckBody {
         );
       }
     });
+    return this.__hasErrors();
+  }
+
+  /**
+   * Método específico para verificar el body de la ruta 'payments'
+   * @returns Ejecución de `__hasErrors`, verificando si hay algún error en la validación
+   */
+  __verifyArray() {
+    if (Array.isArray(this.body) && this.body.length !== 0) {
+      this.body.forEach((value, index) => {
+        if (value.id === undefined) {
+          this.errors.push(`The object at position ${index} doesn't have the 'id' property`);
+        }
+        if (value.count === undefined) {
+          this.errors.push(`The object at position ${index} doesn't have the 'count' property`);
+        }
+        if (isNaN(parseInt(value.id))) {
+          this.errors.push(`The 'id' property of the object at position ${index} must be a number`);
+        }
+        if (isNaN(parseInt(value.count))) {
+          this.errors.push(
+            `The 'count' property of the object at position ${index} must be a number`
+          );
+        }
+      });
+    } else {
+      this.errors.push(
+        `The 'body' must be an array of objects with the 'id' and 'count' properties`
+      );
+    }
     return this.__hasErrors();
   }
 }
