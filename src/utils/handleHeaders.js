@@ -1,3 +1,8 @@
+/**
+ * Controlador para verificar/establecer encabezados
+ * @param {Request} req Solicitud del cliente
+ * @param {Response} res Respuesta del servidor
+ */
 module.exports = (req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Accept');
