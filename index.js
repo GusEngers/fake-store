@@ -7,7 +7,7 @@ require('dotenv').config();
  * y pone en marcha el servidor, habilitando que este empiece
  * a escuchar las solicitudes realizadas
  */
-(async function () {
+async function main() {
   try {
     await db();
     const PORT = process.env.PORT ?? 3000;
@@ -19,4 +19,6 @@ require('dotenv').config();
     process.stdout.write(`[ERROR] Error starting server: ${error.message}\n`);
     process.exit(1);
   }
-})();
+}
+
+main();
