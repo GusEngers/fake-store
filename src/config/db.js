@@ -2,6 +2,7 @@ const { PRODUCTION, DEVELOPMENT } = require('../utils/constants');
 require('dotenv').config();
 const MODE = process.env.NODE_ENV;
 
+const pg = require('pg');
 const { Sequelize } = require('sequelize');
 const ProductInit = require('../api/models/product');
 const CategoryInit = require('../api/models/category');
@@ -18,7 +19,7 @@ function createInstance() {
      * Realiza la conexión en modo producción utilizando:
      * - DB_URI: String URI de acceso a la base de datos
      */
-    return new Sequelize(process.env.DB_URI, { logging: false });
+    return new Sequelize(process.env.DB_URI, { logging: false, dialectModule: pg });
   } else if (MODE === DEVELOPMENT) {
     /**
      * Realiza la conexión en modo desarrollo utilizando:
