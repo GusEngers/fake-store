@@ -1,6 +1,5 @@
 const express = require('express');
 const api = require('./api/routes');
-
 const { allHypermedia } = require('./utils/hypermedias');
 
 const handleHeaders = require('./utils/handleHeaders');
@@ -14,7 +13,6 @@ app.use(require('morgan')('dev'));
 app.use(handleHeaders);
 
 app.get('/', (req, res) => {
-  const options = { limit: 10, offset: 0 };
   res.send(`
   <body style="display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;background-color:black">
     <h1>FakeStore API</h1>

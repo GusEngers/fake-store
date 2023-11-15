@@ -10,7 +10,7 @@ const ResponseError = require('../../../utils/errors');
  * @returns Lista de productos por categoría
  */
 async function getProductsByCategory({ categoryId, limit = 10, offset = 0 }) {
-  const total = await productsLimitAndOffsetCheck({ limit, offset });
+  const total = await productsLimitAndOffsetCheck({ limit, offset, categoryId });
 
   const products = await Product.findAll({
     where: { categoryId },

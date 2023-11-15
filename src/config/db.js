@@ -26,10 +26,16 @@ function createInstance() {
      * - DB_USER: Nombre de usuario que administra la base de datos
      * - DB_PASSWORD: Contraseña de acceso a la base de datos
      */
-    const { DB_NAME, DB_USER, DB_PASSWORD } = process.env;
+    const { DB_NAME, DB_USER, DB_PASSWORD, DB_HOST } = process.env;
     return new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
-      host: 'localhost',
+      host: DB_HOST,
       dialect: 'postgres',
+      // dialectOptions: {
+      //   ssl: {
+      //     require: true,
+      //     rejectUnauthorized: false,
+      //   },
+      // },
     });
   } else {
     throw new Error('Missing information to make the connection to the database');

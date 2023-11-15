@@ -9,9 +9,18 @@ module.exports = (req, res, next) => {
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, PUT, OPTIONS, PATCH');
 
   const accept = req.get('accept');
-  console.log(accept);
-  if (accept !== undefined && accept.toLowerCase() !== 'application/json') {
-    return res.status(406).json({ message: 'Not Acceptable', status: 406 });
+
+  const condition =
+    req.method === 'GET' &&
+    accept !== undefined &&
+    !accept.toLowerCase().includes('application/json');
+
+  if (condition) {
+    return res.status(406).json({
+      message: 'Not Acceptable',
+      status: 406,
+      errors: [`It will only reply with 'content-type: application/json'`],
+    });
   }
   next();
 };
