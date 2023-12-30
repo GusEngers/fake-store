@@ -2,6 +2,7 @@
 
 :root {
   --bg-color1: #000;
+  --bg-color1-transparent: #00000035;
   --bg-color1-hover: #fff;
   --bg-color2: #343434;
   --bg-color2-hover: #bebebe;
@@ -68,6 +69,28 @@ body {
   display: unset;
 }
 
+/* Página Principal */
+#home-main {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 6.5rem);
+  align-items: center;
+  justify-content: center;
+  padding: 0 1rem;
+}
+
+#home-main > h1 {
+  font-size: var(--txt-size-big);
+  color: var(--txt-color1);
+  text-align: center;
+  text-transform: uppercase;
+}
+
+#home-main > p {
+  font-size: var(--txt-size-normal);
+  text-align: center;
+}
+
 /* Media Querys */
 @media (max-width: 600px) {
   #navbar {
@@ -98,7 +121,9 @@ body {
   #navbar .expand-on {
     padding: 1rem 0;
     display: block;
-    position: relative;
+    position: absolute;
+    top: calc(var(--txt-size-normal) + 0.5rem);
+    background-color: var(--bg-color1-transparent);
     width: 100%;
     animation-name: fade-in;
     animation-duration: 1s;
