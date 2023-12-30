@@ -1,0 +1,15 @@
+<header id="navbar">
+  <button type="button" id="button" class="navbutton">Ξ</button>
+  <nav id="nav" class="expand-off">
+    <% if (page === 'home') { %>
+      <a href="/" class="navlink linked">Inicio</a>
+    <% } else { %>
+      <a href="/" class="navlink">Inicio</a>
+    <% } %>
+    <% if (page === 'docs') { %>
+      <a href="/docs" class="navlink linked">Documentación</a>
+    <% } else { %>
+      <a href="/docs" class="navlink">Documentación</a>
+    <% } %>
+  </nav>
+</header>

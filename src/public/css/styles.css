@@ -1,0 +1,121 @@
+/* Variables y Configuraciones Globales */
+
+:root {
+  --bg-color1: #000;
+  --bg-color1-hover: #fff;
+  --bg-color2: #343434;
+  --bg-color2-hover: #bebebe;
+  --txt-color1: #00ffff;
+  --txt-color1-hover: #00ff51;
+  --txt-color2: #fff;
+  --txt-color2-hover: #000;
+  --txt-color-success: #00ff00;
+  --txt-color-error: #ff0000;
+  --txt-size-big: 2rem;
+  --txt-size-normal: 1.5rem;
+  --txt-size-small: 1rem;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-color2);
+  color: var(--txt-color2);
+  font-size: 10px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  text-align: center;
+  margin: 0;
+}
+
+/* Barra de Navegación */
+
+#navbar {
+  background-color: var(--bg-color1);
+  width: 100%;
+  font-size: var(--txt-size-normal);
+  text-align: right;
+  padding: 2rem 0;
+}
+
+#navbar .navbutton {
+  display: none;
+}
+
+#navbar .navlink {
+  color: var(--txt-color2);
+  text-decoration: none;
+  margin: 0 0.75rem;
+}
+
+#navbar .navlink.linked {
+  color: var(--txt-color1);
+  text-decoration: underline;
+}
+
+#navbar .navlink:hover {
+  text-decoration: underline;
+  color: var(--txt-color1);
+}
+
+#navbar .linked:hover {
+  color: var(--txt-color1-hover);
+}
+
+.expand-off,
+.expand-on {
+  display: unset;
+}
+
+/* Media Querys */
+@media (max-width: 600px) {
+  #navbar {
+    padding: 0.25rem 0;
+    text-align: right;
+  }
+
+  #navbar .navbutton {
+    display: unset;
+    font-size: var(--txt-size-normal);
+    margin-right: 1rem;
+    color: var(--txt-color2);
+    border: 0;
+    background-color: transparent;
+  }
+
+  #navbar .navbutton:hover {
+    color: var(--txt-color1-hover);
+    cursor: pointer;
+    transform: scale(1.1);
+  }
+
+  .expand-off {
+    display: none;
+  }
+
+  
+  #navbar .expand-on {
+    padding: 1rem 0;
+    display: block;
+    position: relative;
+    width: 100%;
+    animation-name: fade-in;
+    animation-duration: 1s;
+  }
+
+  #navbar a {
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+}

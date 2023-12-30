@@ -9,7 +9,7 @@ require('dotenv').config();
  */
 async function main() {
   try {
-    await db();
+    // await db();
     const PORT = process.env.PORT ?? 3000;
     app.listen(PORT, () => {
       process.stdout.write(`[INFO] Server in '${process.env.NODE_ENV}' mode\n`);
