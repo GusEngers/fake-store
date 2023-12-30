@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <%- include('../utils/head', { title: 'Documentación'}) %>
+</head>
+<body>
+  <%# Barra de Navegación %>
+  <%- include('../components/navbar', { page: 'docs' }) %>
+
+  <%# Aplicación Principal %>
+  <main id="docs-main">
+    <section id="docs-index">
+      <h2>Inicio</h2>
+      <ul>
+        <li><a href="#inicio">Inicio</a></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </section>
+    <section id="docs-section">
+      <h1>Documentación</h1>
+
+      <hr />
+      <section id="inicio">
+
+      </section>
+    </section>
+  </main>
+
+  <%# Scripts %>
+  <%- include('../utils/scripts') %>
+</body>
+</html>

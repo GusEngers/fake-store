@@ -2,7 +2,7 @@
 
 :root {
   --bg-color1: #000;
-  --bg-color1-transparent: #00000035;
+  --bg-color1-transparent: #000000d6;
   --bg-color1-hover: #fff;
   --bg-color2: #343434;
   --bg-color2-hover: #bebebe;
@@ -13,7 +13,7 @@
   --txt-color-success: #00ff00;
   --txt-color-error: #ff0000;
   --txt-size-big: 2rem;
-  --txt-size-normal: 1.5rem;
+  --txt-size-normal: 1.25rem;
   --txt-size-small: 1rem;
 }
 
@@ -37,7 +37,7 @@ body {
   width: 100%;
   font-size: var(--txt-size-normal);
   text-align: right;
-  padding: 2rem 0;
+  padding: 1.5rem 0;
 }
 
 #navbar .navbutton {
@@ -73,7 +73,7 @@ body {
 #home-main {
   display: flex;
   flex-direction: column;
-  min-height: calc(100vh - 6.5rem);
+  min-height: calc(100vh - 11vh);
   align-items: center;
   justify-content: center;
   padding: 0 1rem;
@@ -89,6 +89,34 @@ body {
 #home-main > p {
   font-size: var(--txt-size-normal);
   text-align: center;
+}
+
+/* Página de Documentación */
+#docs-main {
+  display: flex;
+  text-align: left;
+}
+
+#docs-index,
+#docs-section {
+  min-height: calc(100vh - 11vh);
+  padding: 0 0.5rem;
+}
+
+#docs-index {
+  width: 20%;
+}
+
+#docs-section {
+  color: var(--txt-color2-hover);
+  width: 80%;
+  background-color: var(--bg-color1-hover);
+}
+
+#docs-index h2,
+#docs-section h1 {
+  font-size: var(--txt-size-normal);
+  text-transform: uppercase;
 }
 
 /* Media Querys */
