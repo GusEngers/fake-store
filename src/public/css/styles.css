@@ -58,6 +58,11 @@ em {
   background-color: var(--bg-color2);
   color: var(--txt-color2);
   font-size: var(--txt-size-normal);
+  text-wrap: nowrap;
+}
+.type-divisor {
+  border-width: thick;
+  border-color: var(--bg-color1);  
 }
 
 .big-divisor {
