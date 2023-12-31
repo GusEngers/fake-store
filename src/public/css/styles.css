@@ -47,6 +47,10 @@ p {
   font-size: var(--txt-size-alt);
 }
 
+em {
+  font-size: var(--txt-size-alt);
+}
+
 .type-request {
   width: 100%;
   display: inline-block;
