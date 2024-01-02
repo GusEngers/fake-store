@@ -1,0 +1,48 @@
+<section id="delete-categories">
+  <h3><span class="delete-method">DELETE</span> - Eliminar Categorías</h3>
+  <p>Elimina masivamente las categorías de la base de datos. Por defecto, el rango de eliminación se determina con el parámetro de consulta 'limit' con un valor de 10 elementos y 'offset' en 0 elementos.</p>
+
+  <h4>Ejemplo solicitud correcta</h4>
+  <pre>
+    <span class="type-request">HTTP</span>
+
+    <span style="padding-left: 10px;">DELETE https://fake-store-alpha.vercel.app/api/categories HTTP/1.1</span>
+    <span style="padding-left: 10px;">Content-Type: application/json; charset=utf-8</span>
+
+  </pre>
+
+  <h4>204 - No Content</h4>
+  <em>Elimina los primeros 10 elementos de la base de datos</em>
+  <pre>
+    <span class="type-request">HTTP</span>
+    
+    <span style="padding-left: 10px;">HTTP/1.1 204 No Content</span>
+    
+  </pre>
+
+  <hr />
+
+  <h4>Ejemplo solicitud incorrecta</h4>
+  <pre>
+    <span class="type-request">HTTP</span>
+
+    <span style="padding-left: 10px;">PUT https://fake-store-alpha.vercel.app/api/categories HTTP/1.1</span>
+    <span style="padding-left: 10px;">Content-Type: application/json; charset=utf-8</span>
+
+  </pre>
+
+  <h4>404 - Not Found</h4>
+  <em>Si no se eliminan o no se encuentran resultados dentro de los parámetros de consulta 'limit' y 'offset' responderá con un error</em>
+  <pre>
+    <span class="type-request">HTTP</span>
+    
+    <span style="padding-left: 10px;">HTTP/1.1 404 Not Found</span>
+    <span style="padding-left: 10px;">Content-Type: application/json; charset=utf-8</span>
+
+    <span style="padding-left: 10px;">&lbrace;</span>
+    <span style="padding-left: 20px;">"message": "There are no categories that match the requested condition, or there are no records in the database",</span>
+    <span style="padding-left: 20px;">"status": 404</span>
+    <span style="padding-left: 10px;">&rbrace;</span>
+
+  </pre>
+</section>
