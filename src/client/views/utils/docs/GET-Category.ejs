@@ -59,6 +59,21 @@
 
   </pre>
 
+  <h4>400 - Bad Request (Formato de ID inválido)</h4>
+  <em>Los ID son numéricos, si se usa otro formato responderá con un error</em>
+  <pre>
+    <span class="type-request">HTTP</span>
+    
+    <span style="padding-left: 10px;">HTTP/1.1 400 Bad Request</span>
+    <span style="padding-left: 10px;">Content-Type: application/json; charset=utf-8</span>
+
+    <span style="padding-left: 10px;">&lbrace;</span>
+    <span style="padding-left: 20px;">"message": "The format of the 'id' is invalid",</span>
+    <span style="padding-left: 20px;">"status": 400</span>
+    <span style="padding-left: 10px;">&rbrace;</span>
+
+  </pre>
+
   <h4>404 - Not Found (Categoría no encontrada)</h4>
   <em>Si se proporciona un ID de un producto que no está almacenado en la base de datos responderá con un error</em>
   <pre>
@@ -74,18 +89,4 @@
 
   </pre>
 
-  <h4>400 - Bad Request (Formato de ID inválido)</h4>
-  <em>Los ID son numéricos, si se usa otro formato responderá con un error</em>
-  <pre>
-    <span class="type-request">HTTP</span>
-    
-    <span style="padding-left: 10px;">HTTP/1.1 400 Bad Request</span>
-    <span style="padding-left: 10px;">Content-Type: application/json; charset=utf-8</span>
-
-    <span style="padding-left: 10px;">&lbrace;</span>
-    <span style="padding-left: 20px;">"message": "The format of the 'id' is invalid",</span>
-    <span style="padding-left: 20px;">"status": 400</span>
-    <span style="padding-left: 10px;">&rbrace;</span>
-
-  </pre>
 </section>

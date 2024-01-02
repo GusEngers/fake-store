@@ -53,6 +53,9 @@ function checkNewProduct(req, res, next) {
  */
 function checkUpdateCategory(req, res, next) {
   try {
+    if (!Object.entries(req.body).length) {
+      throw new ResponseError('Error empty body', 400);
+    }
     const check = new CheckBody({
       body: req.body,
       message: 'Error verifying the data required to update category',
@@ -75,6 +78,9 @@ function checkUpdateCategory(req, res, next) {
  */
 function checkUpdateProduct(req, res, next) {
   try {
+    if (!Object.entries(req.body).length) {
+      throw new ResponseError('Error empty body', 400);
+    }
     const check = new CheckBody({
       body: req.body,
       message: 'Error verifying the data required to update product',
