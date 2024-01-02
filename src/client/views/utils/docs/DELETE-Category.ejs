@@ -1,0 +1,64 @@
+<section id="delete-category">
+  <h3><span class="delete-method">DELETE</span> - Eliminar Categoría por id</h3>
+  <p>Busca la categoría según su id en la base de datos y lo elimina.</p>
+
+  <h4>Ejemplo solicitud correcta</h4>
+  <pre>
+    <span class="type-request">HTTP</span>
+
+    <span style="padding-left: 10px;">DELETE https://fake-store-alpha.vercel.app/api/categories/&lt;--ID--&gt; HTTP/1.1</span>
+    <span style="padding-left: 10px;">Content-Type: application/json; charset=utf-8</span>
+
+  </pre>
+
+  <h4>204 - No Content</h4>
+  <em>Elimina el elemento especificado con su id</em>
+  <pre>
+    <span class="type-request">HTTP</span>
+    
+    <span style="padding-left: 10px;">HTTP/1.1 204 No Content</span>
+    
+  </pre>
+
+  <hr />
+
+  <h4>Ejemplo solicitud incorrecta</h4>
+  <pre>
+    <span class="type-request">HTTP</span>
+
+    <span style="padding-left: 10px;">DELETE https://fake-store-alpha.vercel.app/api/categories/&lt;--ID--&gt; HTTP/1.1</span>
+    <span style="padding-left: 10px;">Content-Type: application/json; charset=utf-8</span>
+
+  </pre>
+
+  <h4>400 - Bad Request (Formato de ID inválido)</h4>
+  <em>Los ID son numéricos, si se usa otro formato responderá con un error</em>
+  <pre>
+    <span class="type-request">HTTP</span>
+    
+    <span style="padding-left: 10px;">HTTP/1.1 400 Bad Request</span>
+    <span style="padding-left: 10px;">Content-Type: application/json; charset=utf-8</span>
+
+    <span style="padding-left: 10px;">&lbrace;</span>
+    <span style="padding-left: 20px;">"message": "The format of the 'id' is invalid",</span>
+    <span style="padding-left: 20px;">"status": 400</span>
+    <span style="padding-left: 10px;">&rbrace;</span>
+
+  </pre>
+
+  <h4>404 - Not Found (Categoría no encontrada)</h4>
+  <em>Si se proporciona un ID de un producto que no está almacenado en la base de datos responderá con un error</em>
+  <pre>
+    <span class="type-request">HTTP</span>
+    
+    <span style="padding-left: 10px;">HTTP/1.1 404 Not Found</span>
+    <span style="padding-left: 10px;">Content-Type: application/json; charset=utf-8</span>
+
+    <span style="padding-left: 10px;">&lbrace;</span>
+    <span style="padding-left: 20px;">"message": "The category doesn't exist",</span>
+    <span style="padding-left: 20px;">"status": 404</span>
+    <span style="padding-left: 10px;">&rbrace;</span>
+
+  </pre>
+
+</section>
