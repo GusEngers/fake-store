@@ -29,6 +29,7 @@
         <li><a href="#put-product">Actualizar Producto por ID</a></li>
         <li><a href="#delete-products">Eliminar Productos</a></li>
         <li><a href="#delete-product">Eliminar Producto por ID</a></li>
+        <li><a href="#get-products-category">Lista de Productos por Categoría</a></li>
       </ul>
     </section>
     <section id="docs-section">
@@ -90,8 +91,12 @@
       <%- include('../utils/docs/DELETE-Products') %>
       <hr class="big-divisor" />
       <%# Método para eliminar producto por id %>
-      <!-- <%- include('../utils/docs/DELETE-Product') %> -->
+      <%- include('../utils/docs/DELETE-Product') %>
       <hr class="big-divisor" />
+      <%# Método para listar detalles de productos por categoría %>
+      <%- include('../utils/docs/GET-Products-Category') %>
+
+      <hr class="type-divisor" />
 
     </section>
   </main>
