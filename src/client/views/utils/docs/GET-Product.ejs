@@ -1,0 +1,104 @@
+<section id="get-product">
+  <h3><span class="get-method">GET</span> - Obtener Producto por id</h3>
+  <p>Busca el producto según su id en la base de datos. Si lo encuentra retorna los datos del producto, en caso contrario retorna una respuesta con un mensaje de error.</p>
+
+  <h4>Ejemplo solicitud correcta</h4>
+  <pre>
+    <span class="type-request">HTTP</span>
+
+    <span style="padding-left: 10px;">GET https://fake-store-alpha.vercel.app/api/products/&lt;--ID--&gt; HTTP/1.1</span>
+    <span style="padding-left: 10px;">Content-Type: application/json; charset=utf-8</span>
+
+  </pre>
+
+  <h4>200 - OK</h4>
+  <pre>
+    <span class="type-request">HTTP</span>
+    
+    <span style="padding-left: 10px;">HTTP/1.1 200 OK</span>
+    <span style="padding-left: 10px;">Content-Type: application/json; charset=utf-8</span>
+
+    <span style="padding-left: 10px;">&lbrace;</span>
+    <span style="padding-left: 20px;">"id": &lt;--ID--&gt;,</span>
+    <span style="padding-left: 20px;">"name": "smartphone",</span>
+    <span style="padding-left: 20px;">"description": "samsung smartphone",</span>
+    <span style="padding-left: 20px;">"price": 124.32,</span>
+    <span style="padding-left: 20px;">"categoryId: 1,</span>
+    <span style="padding-left: 20px;">"paths": &lbrack;</span>
+      <span style="padding-left: 30px;">&lbrace;</span>
+        <span style="padding-left: 40px;">"ref": "self",</span>
+        <span style="padding-left: 40px;">"href": "/api/products/&lt;--ID--&gt;",</span>
+        <span style="padding-left: 40px;">"action": "GET"</span>
+      <span style="padding-left: 30px;">&rbrace;,</span>
+      <span style="padding-left: 30px;">&lbrace;</span>
+        <span style="padding-left: 40px;">"ref": "self",</span>
+        <span style="padding-left: 40px;">"href": "/api/products/&lt;--ID--&gt;",</span>
+        <span style="padding-left: 40px;">"action": "PUT"</span>
+      <span style="padding-left: 30px;">&rbrace;,</span>
+      <span style="padding-left: 30px;">&lbrace;</span>
+        <span style="padding-left: 40px;">"ref": "self",</span>
+        <span style="padding-left: 40px;">"href": "/api/products/&lt;--ID--&gt;",</span>
+        <span style="padding-left: 40px;">"action": "DELETE"</span>
+      <span style="padding-left: 30px;">&rbrace;,</span>
+      <span style="padding-left: 30px;">&lbrace;</span>
+        <span style="padding-left: 40px;">"ref": "categories",</span>
+        <span style="padding-left: 40px;">"href": "/api/categories/1",</span>
+        <span style="padding-left: 40px;">"action": "GET"</span>
+      <span style="padding-left: 30px;">&rbrace;,</span>
+      <span style="padding-left: 30px;">&lbrace;</span>
+        <span style="padding-left: 40px;">"ref": "categories",</span>
+        <span style="padding-left: 40px;">"href": "/api/categories/1",</span>
+        <span style="padding-left: 40px;">"action": "PUT"</span>
+      <span style="padding-left: 30px;">&rbrace;,</span>
+      <span style="padding-left: 30px;">&lbrace;</span>
+        <span style="padding-left: 40px;">"ref": "categories",</span>
+        <span style="padding-left: 40px;">"href": "/api/categories/1",</span>
+        <span style="padding-left: 40px;">"action": "DELETE"</span>
+      <span style="padding-left: 30px;">&rbrace;</span>
+    <span style="padding-left: 20px;">&rbrack;</span>
+    <span style="padding-left: 10px;">&rbrace;</span>
+
+  </pre>
+
+  <hr />
+
+  <h4>Ejemplo solicitud incorrecta</h4>
+  <pre>
+    <span class="type-request">HTTP</span>
+
+    <span style="padding-left: 10px;">GET https://fake-store-alpha.vercel.app/api/products/&lt;--ID--&gt; HTTP/1.1</span>
+    <span style="padding-left: 10px;">Content-Type: application/json; charset=utf-8</span>
+
+  </pre>
+
+  <h4>400 - Bad Request (Formato de ID inválido)</h4>
+  <em>Los ID son numéricos, si se usa otro formato responderá con un error</em>
+  <pre>
+    <span class="type-request">HTTP</span>
+    
+    <span style="padding-left: 10px;">HTTP/1.1 400 Bad Request</span>
+    <span style="padding-left: 10px;">Content-Type: application/json; charset=utf-8</span>
+
+    <span style="padding-left: 10px;">&lbrace;</span>
+    <span style="padding-left: 20px;">"message": "The format of the 'id' is invalid",</span>
+    <span style="padding-left: 20px;">"status": 400</span>
+    <span style="padding-left: 10px;">&rbrace;</span>
+
+  </pre>
+
+  <h4>404 - Not Found (Producto no encontrada)</h4>
+  <em>Si se proporciona un ID de un producto que no está almacenado en la base de datos responderá con un error</em>
+  <pre>
+    <span class="type-request">HTTP</span>
+    
+    <span style="padding-left: 10px;">HTTP/1.1 404 Not Found</span>
+    <span style="padding-left: 10px;">Content-Type: application/json; charset=utf-8</span>
+
+    <span style="padding-left: 10px;">&lbrace;</span>
+    <span style="padding-left: 20px;">"message": "The product doesn't exist",</span>
+    <span style="padding-left: 20px;">"status": 404</span>
+    <span style="padding-left: 10px;">&rbrace;</span>
+
+  </pre>
+
+</section>
