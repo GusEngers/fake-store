@@ -137,6 +137,20 @@ em {
   text-align: left;
 }
 
+#docs-index a {
+  color: var(--txt-color2);
+  text-decoration: none;
+}
+
+#docs-index a:hover {
+  color: var(--txt-color1);
+  cursor: pointer;
+}
+
+#docs-index li > a {
+  font-size: var(--txt-size-alt);
+}
+
 #docs-index,
 #docs-section {
   min-height: calc(100vh - 11vh);
@@ -168,6 +182,14 @@ em {
 
 /* Media Querys */
 @media (max-width: 600px) {
+  #docs-index {
+    display: none;
+  }
+
+  #docs-section {
+    width: 100%;
+  }
+
   #navbar {
     padding: 0.25rem 0;
     text-align: right;

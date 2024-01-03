@@ -22,7 +22,7 @@
       </ul>
       <h2><a href="#products">Productos</a></h2>
       <ul>
-        <li><a href="#post-product">Añadir Producto</a></li>
+        <li><a href="#payment-products">Añadir Producto</a></li>
         <li><a href="#get-products">Lista de Productos</a></li>
         <li><a href="#get-product">Obtener Producto por ID</a></li>
         <li><a href="#put-products">Actualizar Productos</a></li>
@@ -30,6 +30,10 @@
         <li><a href="#delete-products">Eliminar Productos</a></li>
         <li><a href="#delete-product">Eliminar Producto por ID</a></li>
         <li><a href="#get-products-category">Lista de Productos por Categoría</a></li>
+      </ul>
+      <h2><a href="#payment">Pago</a></h2>
+      <ul>
+        <li><a href="#payment-products">Pago de Productos</a></li>
       </ul>
     </section>
     <section id="docs-section">
@@ -97,6 +101,15 @@
       <%- include('../utils/docs/GET-Products-Category') %>
 
       <hr class="type-divisor" />
+
+      <section id="payment">
+        <h2>Pago</h2>
+        <p>Esta ruta simula el pago de una lista de productos de la tienda</p>
+      </section>
+
+      <hr class="big-divisor" />
+      <%# Método para realizar el pago de productos %>
+      <%- include('../utils/docs/POST-Payments') %>
 
     </section>
   </main>
