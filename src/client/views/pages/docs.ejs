@@ -10,11 +10,25 @@
   <%# Aplicación Principal %>
   <main id="docs-main">
     <section id="docs-index">
-      <h2><a href="#category">Categorías</a></h2>
+      <h2><a href="#categories">Categorías</a></h2>
       <ul>
         <li><a href="#post-category">Añadir Categoría</a></li>
         <li><a href="#get-categories">Lista de Categorías</a></li>
-        <li><a href="#get-category">Obtener Categoría</a></li>
+        <li><a href="#get-category">Obtener Categoría por ID</a></li>
+        <li><a href="#put-categories">Actualizar Categorías</a></li>
+        <li><a href="#put-category">Actualizar Categoría por ID</a></li>
+        <li><a href="#delete-categories">Eliminar Categorías</a></li>
+        <li><a href="#delete-category">Eliminar Categoría por ID</a></li>
+      </ul>
+      <h2><a href="#products">Productos</a></h2>
+      <ul>
+        <li><a href="#post-product">Añadir Producto</a></li>
+        <li><a href="#get-products">Lista de Productos</a></li>
+        <li><a href="#get-product">Obtener Producto por ID</a></li>
+        <li><a href="#put-products">Actualizar Productos</a></li>
+        <li><a href="#put-product">Actualizar Producto por ID</a></li>
+        <li><a href="#delete-products">Eliminar Productos</a></li>
+        <li><a href="#delete-product">Eliminar Producto por ID</a></li>
       </ul>
     </section>
     <section id="docs-section">
@@ -22,9 +36,9 @@
 
       <hr class="type-divisor" />
 
-      <section id="category">
+      <section id="categories">
         <h2>Categorías</h2>
-        <p>Estas rutas gestionan la creación, obtención, actulización y eliminación de categorías de productos de la tienda</p>
+        <p>Estas rutas gestionan la creación, obtención, actualización y eliminación de categorías de productos de la tienda</p>
       </section>
 
       <hr class="big-divisor" />
@@ -48,6 +62,35 @@
       <hr class="big-divisor" />
       <%# Método para eliminar categoría por id %>
       <%- include('../utils/docs/DELETE-Category') %>
+
+      <hr class="type-divisor" />
+
+      <section id="products">
+        <h2>Productos</h2>
+        <p>Estas rutas gestionan la creación, obtención, actualización y eliminación de productos de la tienda</p>
+      </section>
+
+      <hr class="big-divisor" />
+      <%# Método para añadir un nuevo producto %>
+      <!-- <%- include('../utils/docs/POST-Product') %> -->
+      <hr class="big-divisor"/>
+      <%# Método para listar detalles de productos %>
+      <!-- <%- include('../utils/docs/GET-Products') %> -->
+      <hr class="big-divisor" />
+      <%# Método para obtener detalle de producto por id %>
+      <!-- <%- include('../utils/docs/GET-Product') %> -->
+      <hr class="big-divisor" />
+      <%# Método para actualizar masivamente los productos %>
+      <!-- <%- include('../utils/docs/PUT-Products') %> -->
+      <hr class="big-divisor" />
+      <%# Método para actualizar producto por id %>
+      <!-- <%- include('../utils/docs/PUT-Product') %> -->
+      <hr class="big-divisor" />
+      <%# Método para eliminar masivamente los productos %>
+      <!-- <%- include('../utils/docs/DELETE-Products') %> -->
+      <hr class="big-divisor" />
+      <%# Método para eliminar producto por id %>
+      <!-- <%- include('../utils/docs/DELETE-Product') %> -->
       <hr class="big-divisor" />
 
     </section>
