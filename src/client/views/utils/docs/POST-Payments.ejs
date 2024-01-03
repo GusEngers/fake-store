@@ -1,0 +1,153 @@
+<section id="payment-products">
+  <h3><span class="post-method">POST</span> - Pago de Productos</h3>
+  <p>Realiza el proceso de pago de los productos.</p>
+
+  <h4>Ejemplo solicitud correcta</h4>
+  <pre>
+    <span class="type-request">HTTP</span>
+
+    <span style="padding-left: 10px;">POST https://fake-store-alpha.vercel.app/api/payments HTTP/1.1</span>
+    <span style="padding-left: 10px;">Content-Type: application/json; charset=utf-8</span>
+    <span style="padding-left: 10px;">Content-Length: 62</span>
+    
+    <span style="padding-left: 10px;">&lbrack;</span>
+    <span style="padding-left: 20px;">&lbrace;</span>
+    <span style="padding-left: 30px;">"id": 1, // ID del producto</span>
+    <span style="padding-left: 30px;">"count": 2 // Cantidad del producto</span>
+    <span style="padding-left: 20px;">&rbrace;,</span>
+    <span style="padding-left: 20px;">{"id":34,"count":5},</span>
+    <span style="padding-left: 20px;">{"id":67,"count":1}</span>
+    <span style="padding-left: 10px;">&rbrack;</span>
+
+  </pre>
+  
+  <h4>200 - OK</h4>
+  <pre>
+    <span class="type-request">HTTP</span>
+    
+    <span style="padding-left: 10px;">HTTP/1.1 200 ok</span>
+    <span style="padding-left: 10px;">Content-Type: application/json; charset=utf-8</span>
+
+    <span style="padding-left: 10px;">&lbrace;</span>
+    <span style="padding-left: 20px;">"message": "Payment for a total of 1655.48 USD completed",</span>
+    <span style="padding-left: 20px;">"total": "1655.48",</span>
+    <span style="padding-left: 20px;">"paths": &lbrack;</span>
+      <span style="padding-left: 30px;">&lbrace;</span>
+        <span style="padding-left: 40px;">"ref": "self",</span>
+        <span style="padding-left: 40px;">"href": "/api/payments",</span>
+        <span style="padding-left: 40px;">"action": "POST"</span>
+      <span style="padding-left: 30px;">&rbrace;,</span>
+      <span style="padding-left: 30px;">&lbrace;</span>
+        <span style="padding-left: 40px;">"ref": "self",</span>
+        <span style="padding-left: 40px;">"href": "/api/payments?option=1",</span>
+        <span style="padding-left: 40px;">"action": "POST"</span>
+      <span style="padding-left: 30px;">&rbrace;,</span>
+      <span style="padding-left: 30px;">&lbrace;</span>
+        <span style="padding-left: 40px;">"ref": "self",</span>
+        <span style="padding-left: 40px;">"href": "/api/payments?option=2",</span>
+        <span style="padding-left: 40px;">"action": "POST"</span>
+      <span style="padding-left: 30px;">&rbrace;,</span>
+      <span style="padding-left: 30px;">&lbrace;</span>
+        <span style="padding-left: 40px;">"ref": "products",</span>
+        <span style="padding-left: 40px;">"href": "/api/payments?option=3",</span>
+        <span style="padding-left: 40px;">"action": "POST"</span>
+      <span style="padding-left: 30px;">&rbrace;,</span>
+      <span style="padding-left: 30px;">&lbrace;</span>
+        <span style="padding-left: 40px;">"ref": "products",</span>
+        <span style="padding-left: 40px;">"href": "/api/payments?option=4",</span>
+        <span style="padding-left: 40px;">"action": "POST"</span>
+      <span style="padding-left: 30px;">&rbrace;</span>
+    <span style="padding-left: 20px;">&rbrack;</span>
+    <span style="padding-left: 10px;">&rbrace;</span>
+
+  </pre>
+
+  <hr />
+
+  <h4>Ejemplo solicitud incorrecta</h4>
+  <em>Se puede especificar un parametro de consultas para obtener diversos tipos de errores</em>
+  <pre>
+    <span class="type-request">HTTP</span>
+
+    <span style="padding-left: 10px;">POST https://fake-store-alpha.vercel.app/api/payments?option=/&lt;--OPTION--&gt; HTTP/1.1</span>
+    <span style="padding-left: 10px;">Content-Type: application/json; charset=utf-8</span>
+
+  </pre>
+  
+  <h4>402 - Payment Required (OPTION = 1)</h4>
+  <pre>
+    <span class="type-request">HTTP</span>
+    
+    <span style="padding-left: 10px;">HTTP/1.1 402 Payment Required</span>
+    <span style="padding-left: 10px;">Content-Type: application/json; charset=utf-8</span>
+
+    <span style="padding-left: 10px;">&lbrace;</span>
+    <span style="padding-left: 20px;">"message": "Payment Required",</span>
+    <span style="padding-left: 20px;">"status": 402</span>
+    <span style="padding-left: 10px;">&rbrace;</span>
+
+  </pre>
+
+  <h4>400 - Bad Request (OPTION = 2)</h4>
+  <em>Opción que responderá con un error de fondos insuficientes</em>
+  <pre>
+    <span class="type-request">HTTP</span>
+    
+    <span style="padding-left: 10px;">HTTP/1.1 400 Bad Request</span>
+    <span style="padding-left: 10px;">Content-Type: application/json; charset=utf-8</span>
+
+    <span style="padding-left: 10px;">&lbrace;</span>
+    <span style="padding-left: 20px;">"message": "Insufficient Funds",</span>
+    <span style="padding-left: 20px;">"status": 400</span>
+    <span style="padding-left: 10px;">&rbrace;</span>
+
+  </pre>
+
+  <h4>403 - Forbidden (OPTION = 3)</h4>
+  <em>Opción que responderá con un error de datos incorrectos</em>
+  <pre>
+    <span class="type-request">HTTP</span>
+    
+    <span style="padding-left: 10px;">HTTP/1.1 403 Forbidden</span>
+    <span style="padding-left: 10px;">Content-Type: application/json; charset=utf-8</span>
+
+    <span style="padding-left: 10px;">&lbrace;</span>
+    <span style="padding-left: 20px;">"message": "Incorrect Data Entered",</span>
+    <span style="padding-left: 20px;">"status": 403</span>
+    <span style="padding-left: 10px;">&rbrace;</span>
+
+  </pre>
+
+  <h4>400 - Bad Request (OPTION = 4)</h4>
+  <em>Opción que responderá con un error de tarjeta expirada</em>
+  <pre>
+    <span class="type-request">HTTP</span>
+    
+    <span style="padding-left: 10px;">HTTP/1.1 400 Bad Request</span>
+    <span style="padding-left: 10px;">Content-Type: application/json; charset=utf-8</span>
+
+    <span style="padding-left: 10px;">&lbrace;</span>
+    <span style="padding-left: 20px;">"message": "Expired Card",</span>
+    <span style="padding-left: 20px;">"status": 400</span>
+    <span style="padding-left: 10px;">&rbrace;</span>
+
+  </pre>
+
+  <h4>400 - Bad Request</h4>
+  <em>Si no se proporcionan en el cuerpo de la solicitud los datos necesarios para tramitar el pago de productos, responderá con un error</em>
+  <pre>
+    <span class="type-request">HTTP</span>
+    
+    <span style="padding-left: 10px;">HTTP/1.1 400 Bad Request</span>
+    <span style="padding-left: 10px;">Content-Type: application/json; charset=utf-8</span>
+
+    <span style="padding-left: 10px;">&lbrace;</span>
+    <span style="padding-left: 20px;">"message": "Error verifying the data to payments products",</span>
+    <span style="padding-left: 20px;">"status": 400,</span>
+    <span style="padding-left: 20px;">"errors": &lbrack;</span>
+      <span style="padding-left: 30px;">"The 'body' must be an array of the objects with the 'id' and 'count' properties"</span>
+    <span style="padding-left: 20px;">&rbrack;</span>
+    <span style="padding-left: 10px;">&rbrace;</span>
+
+  </pre>
+</section>

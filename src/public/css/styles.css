@@ -1,0 +1,243 @@
+/* Variables y Configuraciones Globales */
+
+:root {
+  --bg-color1: #000;
+  --bg-color1-transparent: #000000d6;
+  --bg-color1-hover: #fff;
+  --bg-color2: #343434;
+  --bg-color2-hover: #bebebe;
+  --txt-color1: #00ffff;
+  --txt-color1-hover: #00ff51;
+  --txt-color2: #fff;
+  --txt-color2-hover: #000;
+  --txt-color-success: #00ff00;
+  --txt-color-error: #ff0000;
+  --txt-size-big: 2rem;
+  --txt-size-normal: 1.25rem;
+  --txt-size-small: 1rem;
+  --txt-size-alt: 12px
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-color2);
+  color: var(--txt-color2);
+  font-size: 10px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  text-align: center;
+  margin: 0;
+}
+
+pre {
+  white-space: pre-line;
+  border: 1px solid #000;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  background-color: var(--bg-color2-hover);
+  color: var(--txt-color2-hover);
+  overflow: auto;
+  text-wrap: nowrap;
+}
+
+pre,
+p {
+  font-size: var(--txt-size-alt);
+}
+
+em {
+  font-size: var(--txt-size-alt);
+}
+
+.type-request {
+  width: 100%;
+  display: inline-block;
+  padding-left: 10px;
+  background-color: var(--bg-color2);
+  color: var(--txt-color2);
+  font-size: var(--txt-size-normal);
+  text-wrap: nowrap;
+}
+.type-divisor {
+  border-width: thick;
+  border-color: var(--bg-color1);  
+}
+
+.big-divisor {
+  border-width: medium;
+  border-color: var(--bg-color1);
+}
+
+/* Barra de Navegación */
+
+#navbar {
+  background-color: var(--bg-color1);
+  width: 100%;
+  font-size: var(--txt-size-normal);
+  text-align: right;
+  padding: 1.5rem 0;
+}
+
+#navbar .navbutton {
+  display: none;
+}
+
+#navbar .navlink {
+  color: var(--txt-color2);
+  text-decoration: none;
+  margin: 0 0.75rem;
+}
+
+#navbar .navlink.linked {
+  color: var(--txt-color1);
+  text-decoration: underline;
+}
+
+#navbar .navlink:hover {
+  text-decoration: underline;
+  color: var(--txt-color1);
+}
+
+#navbar .linked:hover {
+  color: var(--txt-color1-hover);
+}
+
+.expand-off,
+.expand-on {
+  display: unset;
+}
+
+/* Página Principal */
+#home-main {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 11vh);
+  align-items: center;
+  justify-content: center;
+  padding: 0 1rem;
+}
+
+#home-main > h1 {
+  font-size: var(--txt-size-big);
+  color: var(--txt-color1);
+  text-align: center;
+  text-transform: uppercase;
+}
+
+#home-main > p {
+  font-size: var(--txt-size-normal);
+  text-align: center;
+}
+
+/* Página de Documentación */
+#docs-main {
+  display: flex;
+  text-align: left;
+}
+
+#docs-index a {
+  color: var(--txt-color2);
+  text-decoration: none;
+}
+
+#docs-index a:hover {
+  color: var(--txt-color1);
+  cursor: pointer;
+}
+
+#docs-index li > a {
+  font-size: var(--txt-size-alt);
+}
+
+#docs-index,
+#docs-section {
+  min-height: calc(100vh - 11vh);
+  padding: 0 0.5rem;
+}
+
+#docs-index {
+  width: 20%;
+}
+
+#docs-section {
+  color: var(--txt-color2-hover);
+  width: 80%;
+  background-color: var(--bg-color1-hover);
+}
+
+#docs-index h2,
+#docs-section h1,
+#docs-section h2,
+#docs-section h3 {
+  font-size: var(--txt-size-normal);
+  text-transform: uppercase;
+}
+
+#docs-section h4 {
+  font-size: var(--txt-size-alt);
+  text-transform: uppercase;
+}
+
+/* Media Querys */
+@media (max-width: 600px) {
+  #docs-index {
+    display: none;
+  }
+
+  #docs-section {
+    width: 100%;
+  }
+
+  #navbar {
+    padding: 0.25rem 0;
+    text-align: right;
+  }
+
+  #navbar .navbutton {
+    display: unset;
+    font-size: var(--txt-size-normal);
+    margin-right: 1rem;
+    color: var(--txt-color2);
+    border: 0;
+    background-color: transparent;
+  }
+
+  #navbar .navbutton:hover {
+    color: var(--txt-color1-hover);
+    cursor: pointer;
+    transform: scale(1.1);
+  }
+
+  .expand-off {
+    display: none;
+  }
+
+  
+  #navbar .expand-on {
+    padding: 1rem 0;
+    display: block;
+    position: absolute;
+    top: calc(var(--txt-size-normal) + 0.5rem);
+    background-color: var(--bg-color1-transparent);
+    width: 100%;
+    animation-name: fade-in;
+    animation-duration: 1s;
+  }
+
+  #navbar a {
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+}

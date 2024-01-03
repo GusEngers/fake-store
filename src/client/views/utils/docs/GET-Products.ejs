@@ -1,0 +1,148 @@
+<section id="get-products">
+  <h3><span class="get-method">GET</span> - Lista de Productos</h3>
+  <p>Retorna una lista de productos disponibles en la base de datos. Se puede modificar la cantidad de elementos retornados usando parámetros de consultas.</p>
+
+  <h4>Ejemplo solicitud correcta</h4>
+  <pre>
+    <span class="type-request">HTTP</span>
+
+    <span style="padding-left: 10px;">GET https://fake-store-alpha.vercel.app/api/products HTTP/1.1</span>
+    <span style="padding-left: 10px;">Content-Type: application/json; charset=utf-8</span>
+
+  </pre>
+
+  <h4>200 - OK</h4>
+  <em>Por defecto, los parámetros de consulta "limit" tendrá como valor 10 y "offset" tendrá como valor 0</em>
+  <pre>
+    <span class="type-request">HTTP</span>
+    
+    <span style="padding-left: 10px;">HTTP/1.1 200 OK</span>
+    <span style="padding-left: 10px;">Content-Type: application/json; charset=utf-8</span>
+
+    <span style="padding-left: 10px;">&lbrace;</span>
+    <span style="padding-left: 20px;">"total": 100, // Total de productos almacenados en la base de datos</span>
+    <span style="padding-left: 20px;">"current": 10, // Total de productos retornadas en esta consulta</span>
+    <span style="padding-left: 20px;">"products": &lbrack;</span>
+      <span style="padding-left: 30px;">&lbrace;</span>
+      <span style="padding-left: 40px;">"id": 1,</span>
+      <span style="padding-left: 40px;">"name": "smartphone",</span>
+      <span style="padding-left: 40px;">"description": "samsung smartphone",</span>
+      <span style="padding-left: 40px;">"price": 124.32,</span>
+      <span style="padding-left: 40px;">"category": &lbrace;</span>
+        <span style="padding-left: 50px;">"id": 1,</span>
+        <span style="padding-left: 50px;">"name": "electronic",</span>
+        <span style="padding-left: 50px;">"description: "electronic products",</span>
+      <span style="padding-left: 40px;">"&rbrace;,</span>
+      <span style="padding-left: 40px;">"paths": &lbrack;</span>
+      <span style="padding-left: 50px;">&lbrace;</span>
+        <span style="padding-left: 60px;">"ref": "self",</span>
+        <span style="padding-left: 60px;">"href": "/api/products/1",</span>
+        <span style="padding-left: 60px;">"action": "GET"</span>
+      <span style="padding-left: 50px;">&rbrace;,</span>
+      <span style="padding-left: 50px;">&lbrace;</span>
+        <span style="padding-left: 60px;">"ref": "self",</span>
+        <span style="padding-left: 60px;">"href": "/api/products/1",</span>
+        <span style="padding-left: 60px;">"action": "PUT"</span>
+      <span style="padding-left: 50px;">&rbrace;,</span>
+      <span style="padding-left: 50px;">&lbrace;</span>
+        <span style="padding-left: 60px;">"ref": "self",</span>
+        <span style="padding-left: 60px;">"href": "/api/products/1",</span>
+        <span style="padding-left: 60px;">"action": "DELETE"</span>
+      <span style="padding-left: 50px;">&rbrace;,</span>
+      <span style="padding-left: 50px;">&lbrace;</span>
+        <span style="padding-left: 60px;">"ref": "categories",</span>
+        <span style="padding-left: 60px;">"href": "/api/categories/1",</span>
+        <span style="padding-left: 60px;">"action": "GET"</span>
+      <span style="padding-left: 50px;">&rbrace;,</span>
+      <span style="padding-left: 50px;">&lbrace;</span>
+        <span style="padding-left: 60px;">"ref": "categories",</span>
+        <span style="padding-left: 60px;">"href": "/api/categories/1",</span>
+        <span style="padding-left: 60px;">"action": "PUT"</span>
+      <span style="padding-left: 50px;">&rbrace;,</span>
+      <span style="padding-left: 50px;">&lbrace;</span>
+        <span style="padding-left: 60px;">"ref": "categories",</span>
+        <span style="padding-left: 60px;">"href": "/api/categories/1",</span>
+        <span style="padding-left: 60px;">"action": "DELETE"</span>
+      <span style="padding-left: 50px;">&rbrace;</span>
+    <span style="padding-left: 40px;">&rbrack;</span>
+      <span style="padding-left: 30px;">&rbrace;,</span>
+      <span style="padding-left: 30px;">&lbrace; ... &rbrace;,</span>
+      <span style="padding-left: 30px;">&lbrace; ... &rbrace;,</span>
+      <span style="padding-left: 30px;">&lbrace; ... &rbrace;,</span>
+      <span style="padding-left: 30px;">&lbrace; ... &rbrace;,</span>
+      <span style="padding-left: 30px;">&lbrace; ... &rbrace;,</span>
+      <span style="padding-left: 30px;">&lbrace; ... &rbrace;,</span>
+      <span style="padding-left: 30px;">&lbrace; ... &rbrace;,</span>
+      <span style="padding-left: 30px;">&lbrace; ... &rbrace;,</span>
+      <span style="padding-left: 30px;">&lbrace; ... &rbrace;,</span>
+    <span style="padding-left: 20px;">&rbrack;,</span>
+    <span style="padding-left: 20px;">"paths": &lbrack;</span>
+      <span style="padding-left: 30px;">&lbrace;</span>
+        <span style="padding-left: 40px;">"ref": "self",</span>
+        <span style="padding-left: 40px;">"href": "/api/products",</span>
+        <span style="padding-left: 40px;">"action": "POST"</span>
+      <span style="padding-left: 30px;">&rbrace;,</span>
+      <span style="padding-left: 30px;">&lbrace;</span>
+        <span style="padding-left: 40px;">"ref": "self",</span>
+        <span style="padding-left: 40px;">"href": "/api/products?limit=10&offset=0",</span>
+        <span style="padding-left: 40px;">"action": "GET"</span>
+      <span style="padding-left: 30px;">&rbrace;,</span>
+      <span style="padding-left: 30px;">&lbrace;</span>
+        <span style="padding-left: 40px;">"ref": "self",</span>
+        <span style="padding-left: 40px;">"href": "/api/products?limit=10&offset=0",</span>
+        <span style="padding-left: 40px;">"action": "PUT"</span>
+      <span style="padding-left: 30px;">&rbrace;,</span>
+      <span style="padding-left: 30px;">&lbrace;</span>
+        <span style="padding-left: 40px;">"ref": "self",</span>
+        <span style="padding-left: 40px;">"href": "/api/products?limit=10&offset=0",</span>
+        <span style="padding-left: 40px;">"action": "DELETE"</span>
+      <span style="padding-left: 30px;">&rbrace;</span>
+    <span style="padding-left: 20px;">&rbrack;</span>
+
+  </pre>
+
+  <hr />
+
+  <h4>Ejemplo solicitud incorrecta</h4>
+  <pre>
+    <span class="type-request">HTTP</span>
+
+    <span style="padding-left: 10px;">GET https://fake-store-alpha.vercel.app/api/products?limit=&lt;--LIMIT--&gt;&offset=&lt;--OFFSET--&gt; HTTP/1.1</span>
+    <span style="padding-left: 10px;">Content-Type: application/json; charset=utf-8</span>
+
+  </pre>
+
+  <h4>400 - Bad Request</h4>
+  <em>Si el valor de "offset" es mayor que la cantidad total de registros de productos almacenados en la base de datos, responderá con un error</em>
+  <pre>
+    <span class="type-request">HTTP</span>
+    
+    <span style="padding-left: 10px;">HTTP/1.1 400 Bad Request</span>
+    <span style="padding-left: 10px;">Content-Type: application/json; charset=utf-8</span>
+
+    <span style="padding-left: 10px;">&lbrace;</span>
+    <span style="padding-left: 20px;">"message": "'offset' should not be greater than the total 'count' of categories, currently 'offset' is &lt;--OFFSET--&gt; and total categories is 10",</span>
+    <span style="padding-left: 20px;">"status": 400</span>
+    <span style="padding-left: 10px;">&rbrace;</span>
+
+  </pre>
+
+  <h4>400 - Bad Request</h4>
+  <em>Para un mayor control y rendimiento, si se especifica un valor mayor a 50 en "limit" o en "offset", responderá con un error</em>
+  <pre>
+    <span class="type-request">HTTP</span>
+    
+    <span style="padding-left: 10px;">HTTP/1.1 400 Bad Request</span>
+    <span style="padding-left: 10px;">Content-Type: application/json; charset=utf-8</span>
+
+    <span style="padding-left: 10px;">&lbrace;</span>
+    <span style="padding-left: 20px;">"message": "Error setting 'limit' and/or 'offset'",</span>
+    <span style="padding-left: 20px;">"status": 400,</span>
+      <span style="padding-left: 20px;">"errors": &lbrack;</span>
+        <span style="padding-left: 30px;">"'limit' cannot have values greater than 50",</span>
+        <span style="padding-left: 30px;">"'offset' cannot have values greater than 50"</span>
+      <span style="padding-left: 20px;">&rbrack;</span>
+    <span style="padding-left: 10px;">&rbrace;</span>
+
+  </pre>
+</section>

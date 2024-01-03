@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <%- include('../utils/head', { title: 'Inicio'}) %>
+</head>
+<body>
+  <%# Barra de Navegación %>
+  <%- include('../components/navbar', { page: 'home' }) %>
+
+  <%# Aplicación Principal %>
+  <main id="home-main">
+    <h1>Fake-Store API</h1>
+    <p>¡API Web para obtener datos de prueba para simular una tienda on-line!</p>
+  </main>
+
+  <%# Scripts %>
+  <%- include('../utils/scripts') %>
+</body>
+</html>
