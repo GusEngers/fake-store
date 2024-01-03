@@ -62,17 +62,16 @@ class CheckBody {
       if (prop.required && !have) {
         this.errors.push(`The value of the '${prop.name}' property is required`);
       }
+      
       if (have && prop.type === 'float' && isNaN(parseFloat(this.body[prop.name]))) {
         this.errors.push(
           `The format of the value of the '${prop.name}' property must be 'number' or 'float number'`
         );
+
       } else if (have && prop.type === 'number' && isNaN(parseInt(this.body[prop.name]))) {
         this.errors.push(`The format of the value of the '${prop.name}' property must be 'number'`);
-      } else if (
-        have &&
-        typeof this.body[prop.name] !== prop.type &&
-        !['float', 'number'].includes(prop.type)
-      ) {
+
+      } else if ( have && typeof this.body[prop.name] !== prop.type && !['float', 'number'].includes(prop.type) ) {
         this.errors.push(
           `The format of the value of the '${prop.name}' property must be '${prop.type}'`
         );
